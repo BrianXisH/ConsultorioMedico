@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfica de Pastel</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="pastelChart" width="400" height="400"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var data = {
+                labels: [
+                    "Arabia Saudita",
+                    "Rusia",
+                    "Irak",
+                    "Emiratos Árabes Unidos",
+                    "Canadá"
+                ],
+                datasets: [{
+                    data: [133.3, 86.2, 52.2, 51.2, 50.2],
+                    backgroundColor: [
+                        "#FF6384",
+                        "#63FF84",
+                        "#84FF63",
+                        "#8463FF",
+                        "#6384FF"
+                    ]
+                }]
+            };
+
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false
+            };
+
+            var ctx = document.getElementById('pastelChart').getContext('2d');
+            var pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
+        });
+    </script>
+</body>
+</html>
