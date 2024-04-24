@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ipsa;    
+use Illuminate\Support\Facades\DB;
 
 class InterrogatorioController extends Controller
 {
@@ -19,7 +20,9 @@ class InterrogatorioController extends Controller
 
 public function store(Request $request)
 {
-     // Validar los datos recibidos del formulario
+
+    $ultimaFichaId = session('selectedPacienteId');
+     // Validar los datos recibidos del formularios
      $validatedData = $request->validate([
         'interrogatorio_aparato_digestivo' => 'nullable|string|max:255',
         'interrogatorio_aparato_respiratorio' => 'nullable|string|max:255',
@@ -32,14 +35,19 @@ public function store(Request $request)
         'interrogatorio_sistema_tegumentario' => 'nullable|string|max:255'
     ]);
 
-    // Crear y guardar el registro en la base de datos usando el modelo Ipsa
-    $ipsa = new Ipsa($validatedData);
-    if ($ipsa->save()) {
-        // Si se guarda correctamente, redirigir con un mensaje de éxito
-        return redirect()->route('exploracion.index')->with('success', 'Antecedentes personales no patológicos guardados con éxito.');
-    } else {
-        // Si no se guarda, redirigir con un mensaje de error
-        return redirect()->back()->with('error', 'Error al guardar el interrogatorio');
+    
+    DB::beginTransaction();
+    try {
+        // Combinar los datos validados con el ID de la última ficha
+        $eprsonalHereditario = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
+        $personalHereditario = new Ipsa($eprsonalHereditario);
+        $personalHereditario->save(); // Guardar en la base de datos
+
+        DB::commit();
+        return redirect()->route('receta.show')->with('success', 'Antecedentes personales patológicos guardados con éxito.');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->withErrors('Error al guardar los antecedentes personales patológicos: ' . $e->getMessage());
     }
 }
 }

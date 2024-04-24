@@ -72,15 +72,7 @@
             <textarea style="width: 100%; height: 100px; resize: none; overflow-wrap: break-word;" id="otros" name="otros" placeholder="Ingrese otros datos relevantes">{{ old('otros') }}</textarea>
         </div>
 
-        <div class="form-group">
-            <label for="resultadosEstudios">Resultados previos y actuales de estudios de laboratorio, gabinete y otros</label>
-            <textarea style="width: 100%; height: 100px; resize: none; overflow-wrap: break-word;" id="resultadosEstudios" name="resultadosEstudios" placeholder="Ingrese los resultados de estudios">{{ old('resultadosEstudios') }}</textarea>
-        </div>
 
-        <div class="form-group">
-            <label style="margin: 20px" for="diagnostico">Diagnóstico</label>
-            <input type="text" id="diagnostico" name="diagnostico" placeholder="Buscar diagnóstico">
-        </div>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>

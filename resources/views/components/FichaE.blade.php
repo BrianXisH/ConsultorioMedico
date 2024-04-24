@@ -14,16 +14,16 @@
         </div>
         <div class="form-group">
             <label>Fecha de la última consulta médica</label>
-            <input type="date" name="fechaUltimaConsulta" class="form-control @error('fechaUltimaConsulta') is-invalid @enderror" value="{{ old('fechaUltimaConsulta') }}">
-            @error('fechaUltimaConsulta')
+            <input type="date" name="fecha_ultima_consulta" class="form-control @error('fecha_ultima_consulta') is-invalid @enderror" value="{{ old('fecha_ultima_consulta') }}">
+            @error('fecha_ultima_consulta')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
         
         <div class="form-group">
             <label>Motivo de la última consulta médica</label>
-            <input type="text" name="motivoUltimaConsulta" class="form-control @error('motivoUltimaConsulta') is-invalid @enderror" value="{{ old('motivoUltimaConsulta') }}">
-            @error('motivoUltimaConsulta')
+            <input type="text" name="motivo_ultima_consulta" class="form-control @error('motivo_ultima_consulta') is-invalid @enderror" value="{{ old('motivo_ultima_consulta') }}">
+            @error('motivo_ultima_consulta')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -31,6 +31,16 @@
         <div class="form-group">
             <input type="submit" value="Enviar" class="btn btn-primary">
         </div>
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </form>
 </div>
 @endsection

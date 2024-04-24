@@ -13,6 +13,7 @@ class ExploracionFisica extends Model
     protected $table = 'exploracion_fisica';  // Asegurando que Laravel use el nombre correcto de la tabla.
 
     protected $fillable = [
+        'fic_ident_idfi',
         'cabeza_exostosis',
         'cabeza_endostosis',
         'craneo_dolicocefalico',

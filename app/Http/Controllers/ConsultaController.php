@@ -22,7 +22,14 @@ class ConsultaController extends Controller
         // Aquí deberías incluir la lógica para inicializar una nueva consulta.
         // Por ejemplo, mostrar un formulario para ingresar datos de la consulta o directamente crear un registro en la base de datos.
 
-       return view('components.Fichaidentificacion'); // Retorna la vista donde se crea una nueva consulta.
+        return redirect()->route('pacientes.index'); // Retorna la vista donde se crea una nueva consulta.
+    }
+    public function registrar()
+    {
+        // Aquí deberías incluir la lógica para inicializar una nueva consulta.
+        // Por ejemplo, mostrar un formulario para ingresar datos de la consulta o directamente crear un registro en la base de datos.
+
+        return redirect()->route('identification'); // Retorna la vista donde se crea una nueva consulta.
     }
 
     /**
@@ -35,7 +42,7 @@ class ConsultaController extends Controller
         // Aquí deberías incluir la lógica para manejar la creación de consultas desde datos existentes.
         // Podría ser un formulario que liste consultas anteriores para seleccionar y editar.
 
-       return view('components.FichaE'); // Retorna la vista donde se gestionan las consultas existentes.
+        return redirect()->route('busqueda.index'); // Retorna la vista donde se gestionan las consultas existentes.
     }
 
     /**

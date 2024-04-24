@@ -31,7 +31,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/identification', [IdentificationController::class, 'index'])->name('identification');
 Route::post('/identification', [IdentificationController::class, 'procesarFormulario'])->name('ficha.store');
-Route::get('/identification_existente', [IdentificacionEController::class, 'index'])->name('identification');
+Route::get('/identification_existente', [IdentificacionEController::class, 'index'])->name('identification.index');
 Route::post('/identification_existente', [IdentificacionEController::class, 'procesarFormulario'])->name('submitForm');
 
 Route::get('/antecedentes_patologicos_hereditarios', [FamilyHistoryController::class, 'index'])->name('antecedenes_patologicos_hereditarios');
@@ -47,6 +47,9 @@ Route::post('/antecedentes_personales_patologicos', [PersonalPatologicoControlle
 Route::get('/busqueda_pacientes', [BusquedaPacienteController::class, 'index'])->name('pacientes.index');
 Route::get('/busqueda_pacientes/{id}', [BusquedaPacienteController::class, 'show'])->name('pacientes.show');
 
+Route::get('/busqueda_pacientes_nuevo', [BusquedaPacienteController::class, 'index_nueva'])->name('busqueda.index');
+Route::get('/busqueda_pacientes_nuevo/{id}', [BusquedaPacienteController::class, 'show_nueva'])->name('busqueda.show');
+
 
 // Ruta para mostrar el formulario
 Route::get('/exploracion', [ExploracionFisicaController::class, 'index'])->name('exploracion.index');
@@ -60,10 +63,12 @@ Route::post('/habitus', [HabitusController::class, 'store'])->name('habitus.stor
 
 Route::get('/nueva_consulta', [ConsultaController::class, 'crearNueva'])->name('consultas.nueva');
 Route::get('/consultas/existente', [ConsultaController::class, 'crearExistente'])->name('consultas.existente');
+Route::get('/registrar_paciente', [ConsultaController::class, 'registrar'])->name('paciente.registrar');
 
 
 
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
+Route::get('/generarpdf', [PdfController::class, 'recetanueva'])->name('receta.nueva');
 
 
 

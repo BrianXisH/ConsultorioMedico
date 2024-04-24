@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FicIdent;
+use Illuminate\Support\Facades\DB;
 
 class IdentificacionEController extends Controller
 {
@@ -13,16 +15,40 @@ class IdentificacionEController extends Controller
 
     public function index()
     {
-        return view('components.FichaE');  // Asumiendo que la vista se llama 'index.blade.php' dentro de una carpeta 'identification'
+        return view('components.FichaE'); // Asegúrate de que este sea el nombre correcto de la vista.
     }
 
-     // Procesa el formulario después de que el usuario lo envía
-     public function procesarFormulario(Request $request)
-     {
-         // Aquí procesarías el formulario. Por ejemplo:
-         // Validar datos, guardar en la base de datos, etc.
- 
-         // Después redirigir al usuario a otra página o devolver una vista
-         return redirect()->route('/identification')->with('success', 'Formulario enviado con éxito.');
-     }
+    public function procesarFormulario(Request $request)
+    {
+        $request->validate([
+            'fecha_consulta' => 'required|date',
+            'fecha_ultima_consulta' => 'required|date',
+            'motivo_ultima_consulta' => 'required|max:45',
+        ]);
+
+        // Recuperar el id del paciente guardado en la sesión
+        $pacienteId = session('selectedPacienteId');
+        if (!$pacienteId) {
+            return back()->withErrors('No se ha seleccionado ningún paciente.');
+        }
+        $errorLog = "ID del paciente guardado en la sesión: " . $pacienteId;
+        error_log($errorLog);
+
+        DB::beginTransaction();
+        try {
+            $ficha = new FicIdent([
+                'pacientes_idpacientes' => $pacienteId,
+                'fecha_consulta' => $request->input('fecha_consulta'),
+                'fecha_ultima_consulta' => $request->input('fecha_ultima_consulta'),
+                'motivo_ultima_consulta' => $request->input('motivo_ultima_consulta'),
+            ]);
+            $ficha->save();
+
+            DB::commit();
+            return redirect()->route('pathological.index')->with('success', 'La ficha de identificación ha sido guardada correctamente.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->withErrors('Error al guardar la ficha de identificación: ' . $e->getMessage());
+        }
+    }
 }

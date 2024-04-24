@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ExploracionFisica;
+use Illuminate\Support\Facades\DB;
 
 class ExploracionFisicaController extends Controller
 {
@@ -18,26 +19,41 @@ class ExploracionFisicaController extends Controller
 }
 public function store(Request $request)
     {
-        $data = $request->all();
+      // Valida y guarda los datos
+      $validatedData = $request->validate([
+        // Tus otros campos de validación
+        'otros' => 'nullable|string|max:255',
+        // Añade aquí las validaciones de otros campos si es necesario
+    ]);
 
-    // Asegurar que los valores de los checkboxes sean booleanos
-    $checkboxFields = [
-        'cabeza_exostosis', 'cabeza_endostosis', 'craneo_dolicocefalico', 'craneo_mesocefalico', 'craneo_braquicefalico',
-        'cara_asimetrias_transversales', 'cara_asimetrias_longitudinales', 'perfil_concavo', 'perfil_convexo', 'perfil_recto',
-        'piel_normal', 'piel_palida', 'piel_cianotica', 'piel_enrojecida', 'musculos_hipotonicos', 'musculos_hipertonicos',
+    // Asegurarse de que los valores booleanos sean procesados correctamente
+    $booleanFields = [
+        'cabeza_exostosis', 'cabeza_endostosis', 'craneo_dolicocefalico', 'craneo_mesocefalico', 
+        'craneo_braquicefalico', 'cara_asimetrias_transversales', 'cara_asimetrias_longitudinales', 
+        'perfil_concavo', 'perfil_convexo', 'perfil_recto', 'piel_normal', 'piel_palida', 
+        'piel_cianotica', 'piel_enrojecida', 'musculos_hipotonicos', 'musculos_hipertonicos', 
         'musculos_espasticos', 'cuello_palpa_cadena_ganglionar'
     ];
 
-    foreach ($checkboxFields as $field) {
-        $data[$field] = $request->has($field);
+    foreach ($booleanFields as $field) {
+        $validatedData[$field] = $request->has($field) ? 1 : 0;
     }
 
-    // Valida y guarda los datos
-    
-    $exploracion = new ExploracionFisica($data);
-    $exploracion->save();
 
-        // Redireccionar con un mensaje de éxito
-        return redirect()->route('receta.show')->with('success', 'message');
-    }
+
+    $ultimaFichaId = session('selectedPacienteId');
+
+    DB::beginTransaction();
+    try {
+        // Combinar los datos validados con el ID de la última ficha
+        $eprsonalHereditario = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
+        $personalHereditario = new ExploracionFisica($eprsonalHereditario);
+        $personalHereditario->save(); // Guardar en la base de datos
+
+        DB::commit();
+        return redirect()->route('interrogatorio.index')->with('success', 'Antecedentes personales patológicos guardados con éxito.');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->withErrors('Error al guardar los antecedentes personales patológicos: ' . $e->getMessage());
+    }}
 }

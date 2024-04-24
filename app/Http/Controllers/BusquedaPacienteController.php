@@ -28,11 +28,40 @@ class BusquedaPacienteController extends Controller
         $pacientes = $query->paginate(10);  // Paginación de resultados
 
         return view('components.BusquedaPacientes', ['pacientes' => $pacientes]);
+
+
+        
     }
 
     public function show($id)
     {
         session(['selectedPacienteId' => $id]);  // Almacenar ID en sesión
-        return redirect()->route('receta.show');
+        return redirect()->route('identification.index');
+    }
+
+    public function index_nueva(Request $request)
+    {
+        $query = Paciente::query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('nombre_apellido_paterno', 'LIKE', "%{$search}%")
+                  ->orWhere('nombre_apellido_materno', 'LIKE', "%{$search}%")
+                  ->orWhere('nombre_nombres', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $pacientes = $query->paginate(10);  // Paginación de resultados
+
+        return view('components.consultaExistente.BusquedaPacientes', ['pacientes' => $pacientes]);
+
+
+        
+    }
+    public function show_nueva($id)
+    {
+        session(['selectedPacienteId' => $id]);  // Almacenar ID en sesión
+        return redirect()->route('receta.nueva');
     }
 }

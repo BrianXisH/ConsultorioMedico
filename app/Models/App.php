@@ -13,6 +13,7 @@ class App extends Model
     protected $table = 'app';  // Asegurando que Laravel use el nombre correcto de la tabla.
 
     protected $fillable = [
+        'fic_ident_idfi',
         'enfermedades_inflamatorias_infecciosas_no_trasmisibles',
         'enfermedades_trasmision_sexual',
         'enfermedades_degenerativas',

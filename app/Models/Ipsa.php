@@ -9,9 +9,11 @@ class Ipsa extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $table = 'ipsa';  // Asegurando que Laravel use el nombre correcto de la tabla.
 
     protected $fillable = [
+        'fic_ident_idfi',
         'interrogatorio_aparato_digestivo',
         'interrogatorio_aparato_respiratorio',
         'interrogatorio_cardiovascular',

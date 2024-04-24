@@ -14,6 +14,7 @@ class Aph extends Model
     protected $table = 'aph';  // Asegurando que Laravel use el nombre correcto de la tabla.
 
     protected $fillable = [
+        'fic_ident_idfi',
         'madre',
         'padre',
         'hermanos',

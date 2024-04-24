@@ -6,7 +6,11 @@
         <canvas id="pieChart"></canvas>
     </div>
 
-    <div class="botones-container" style="position: absolute; top: 200px; left: 880px; width: 454px; height: 261px; background: #FFFFFF; border-radius: 4px; box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="botones-container" style="position: absolute; top: 200px; left: 880px; width: 454px; height: 300px; background: #FFFFFF; border-radius: 4px; box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="boton" style="margin-bottom: 20px; text-align: center;">
+            <span style="display: block; margin-bottom: 10px;">Registrar usuario</span>
+            <button onclick="window.location.href='{{ route('paciente.registrar') }}'" style="padding: 10px 20px; background-color: #007bff; color: #FFFFFF; border: none; border-radius: 4px; cursor: pointer;">Crear nueva consulta</button>
+        </div>
         <div class="boton" style="margin-bottom: 20px; text-align: center;">
             <span style="display: block; margin-bottom: 10px;">Nueva Consulta</span>
             <button onclick="window.location.href='{{ route('consultas.nueva') }}'" style="padding: 10px 20px; background-color: #007bff; color: #FFFFFF; border: none; border-radius: 4px; cursor: pointer;">Crear nueva consulta</button>

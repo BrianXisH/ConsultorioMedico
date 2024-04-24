@@ -9,10 +9,13 @@ class FicIdent extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'fic_ident';  // Asegurando que Laravel use el nombre correcto de la tabla.
     protected $primaryKey = 'idfi'; // Ajustando la clave primaria.
 
     protected $fillable = [
+        'pacientes_idpacientes',
         'fecha_consulta',
         'fecha_ultima_consulta',
         'motivo_ultima_consulta',

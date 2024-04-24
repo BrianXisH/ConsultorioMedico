@@ -13,6 +13,7 @@ class Apnp extends Model
     protected $table = 'apnp';  // Asegurando que Laravel use el nombre correcto de la tabla.
 
     protected $fillable = [
+        'fic_ident_idfi',
         'habitos_higienicos_vestuario',
         'habitos_higienicos_lavado_dientes_frecuencia',
         'habitos_higienicos_utiliza_auxiliares_higiene_bucal',
