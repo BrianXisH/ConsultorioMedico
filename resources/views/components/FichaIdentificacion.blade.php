@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container" style="max-width: 800px;">
-    <h1>Ficha de identificación</h1>
+    <h1>Informacion del Paciente</h1>
     <form method="POST" action="{{ route('ficha.store') }}" class="form-container">
         @csrf
 
