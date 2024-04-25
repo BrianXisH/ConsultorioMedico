@@ -19,15 +19,15 @@
         </div>
 
         <div class="form-group">
-            <label>Género</label>
-            <div>
-                <label><input type="radio" value="Masculino" name="genero_masculino" {{ old('genero_masculino') == 'true' ? 'checked' : '' }}> Masculino</label>
-                <label><input type="radio" value="Femenino" name="genero_femenino" {{ old('genero_femenino') == 'true' ? 'checked' : '' }}> Femenino</label>
-            </div>
-            @error('genero_masculino', 'genero_femenino')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
+    <label>Género</label>
+    <div>
+        <label><input type="radio" value="masculino" name="genero" {{ old('genero') == 'masculino' ? 'checked' : '' }}> Masculino</label>
+        <label><input type="radio" value="femenino" name="genero" {{ old('genero') == 'femenino' ? 'checked' : '' }}> Femenino</label>
+    </div>
+    @error('genero')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+    @enderror
+</div>
 
         <div class="form-group">
             <label>Lugar y fecha de nacimiento</label>
