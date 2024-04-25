@@ -21,13 +21,12 @@ class IdentificationController extends Controller
 
     public function procesarFormulario(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nombre_apellido_paterno' => 'required|max:45',
             'nombre_apellido_materno' => 'required|max:45',
             'nombre_nombres' => 'required|max:45',
             'edad_anios' => 'required|integer',
-            'genero_masculino' => 'nullable|boolean',
-            'genero_femenino' => 'nullable|boolean',
+            'genero' => 'required|in:masculino,femenino',
             'ugar_nacimiento_estado' => 'required|max:45',
             'lugar_nacimiento_ciudad' => 'required|max:45',
             'fecha_nacimiento' => 'required|date',
@@ -49,7 +48,16 @@ class IdentificationController extends Controller
         // Transacción para asegurar la integridad de los datos
         DB::beginTransaction();
         try {
-            $paciente = new Paciente($request->all());
+            $pacienteData = $validatedData;
+            $pacienteData['genero_masculino'] = $validatedData['genero'] === 'masculino' ? true : false;
+            $pacienteData['genero_femenino'] = $validatedData['genero'] === 'femenino' ? true : false;
+            unset($pacienteData['genero']); 
+
+            
+
+
+
+            $paciente = new Paciente($pacienteData);
             $paciente->save();  // Guardar primero el paciente
               // Guardar el ID del paciente en la sesión
 
