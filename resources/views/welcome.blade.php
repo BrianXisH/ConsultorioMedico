@@ -1,23 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="estadisticas" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
-    <div class="grafica-container" style="position: relative; top: 40px; left: 73px; width: 719px; height: 400px; background: #FFFFFF; border-radius: 6px; box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f;">
-        <canvas id="pieChart"></canvas>
-    </div>
 
-    <div class="botones-container" style="position: absolute; top: 200px; left: 880px; width: 454px; height: 300px; background: #FFFFFF; border-radius: 4px; box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <div class="boton" style="margin-bottom: 20px; text-align: center;">
-            <span style="display: block; margin-bottom: 10px;">Registrar usuario</span>
-            <button onclick="window.location.href='{{ route('paciente.registrar') }}'" style="padding: 10px 20px; background-color: #007bff; color: #FFFFFF; border: none; border-radius: 4px; cursor: pointer;">Crear nueva consulta</button>
+<style>
+    .btn-orange {
+        background-color: rgba(255, 166, 0, 0.834);
+        color: white; /* Cambia el color del texto a blanco para que sea legible en el fondo naranja */
+    }
+</style>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Registrar usuario</h5>
+                    <button onclick="window.location.href='{{ route('paciente.registrar') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/paciente.png') }}" alt="Registrar Paciente" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Nueva Consulta</h5>
+                    <button onclick="window.location.href='{{ route('consultas.nueva') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/consulta.png') }}" alt="Nueva Consulta" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Consulta existente</h5>
+                    <button onclick="window.location.href='{{ route('consultas.existente') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/existente.png') }}" alt="Consulta Existente" height="40">
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="boton" style="margin-bottom: 20px; text-align: center;">
-            <span style="display: block; margin-bottom: 10px;">Nueva Consulta</span>
-            <button onclick="window.location.href='{{ route('consultas.nueva') }}'" style="padding: 10px 20px; background-color: #007bff; color: #FFFFFF; border: none; border-radius: 4px; cursor: pointer;">Crear nueva consulta</button>
-        </div>
-        <div class="boton" style="margin-bottom: 20px; text-align: center;">
-            <span style="display: block; margin-bottom: 10px;">Consulta existente</span>
-            <button onclick="window.location.href='{{ route('consultas.existente') }}'" style="padding: 10px 20px; background-color: #007bff; color: #FFFFFF; border: none; border-radius: 4px; cursor: pointer;">Crear consulta existente</button>
+
+        <div class="col-lg-8 col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
