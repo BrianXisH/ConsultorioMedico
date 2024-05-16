@@ -24,6 +24,13 @@ class IdentificacionEController extends Controller
             'fecha_consulta' => 'required|date',
             'fecha_ultima_consulta' => 'required|date',
             'motivo_ultima_consulta' => 'required|max:45',
+        ], [
+            'fecha_consulta.required' => 'La fecha de consulta es obligatoria.',
+            'fecha_consulta.date' => 'La fecha de consulta no tiene un formato válido.',
+            'fecha_ultima_consulta.required' => 'La fecha de la última consulta es obligatoria.',
+            'fecha_ultima_consulta.date' => 'La fecha de la última consulta no tiene un formato válido.',
+            'motivo_ultima_consulta.required' => 'El motivo de la última consulta es obligatorio.',
+            'motivo_ultima_consulta.max' => 'El motivo de la última consulta no debe exceder los 45 caracteres.',
         ]);
 
         // Recuperar el id del paciente guardado en la sesión
@@ -45,8 +52,12 @@ class IdentificacionEController extends Controller
             $ficha->save();
 
             DB::commit();
-            return redirect()->route('pathological.index')->with('success', 'La ficha de identificación ha sido guardada correctamente.');
+
+            toastr()->success('Ficha de identificación guardada con éxito.');
+            toastr()->forget('success');
+            return redirect()->route('identification.index');
         } catch (\Exception $e) {
+
             DB::rollback();
             return back()->withErrors('Error al guardar la ficha de identificación: ' . $e->getMessage());
         }

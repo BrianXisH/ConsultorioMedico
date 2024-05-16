@@ -33,6 +33,16 @@ public function store(Request $request)
         'interrogatorio_sistema_nervioso' => 'nullable|string|max:255',
         'interrogatorio_sistema_musculoesqueletico' => 'nullable|string|max:255',
         'interrogatorio_sistema_tegumentario' => 'nullable|string|max:255'
+    ], [
+        'interrogatorio_aparato_digestivo.string' => 'El campo "Aparato digestivo" debe ser una cadena de texto.',
+        'interrogatorio_aparato_respiratorio.string' => 'El campo "Aparato respiratorio" debe ser una cadena de texto.',
+        'interrogatorio_cardiovascular.string' => 'El campo "Cardiovascular" debe ser una cadena de texto.',
+        'interrogatorio_aparato_genitourinario.string' => 'El campo "Aparato genitourinario" debe ser una cadena de texto.',
+        'interrogatorio_sistema_endocrino.string' => 'El campo "Sistema endocrino" debe ser una cadena de texto.',
+        'interrogatorio_sistema_hemepoyetico.string' => 'El campo "Sistema hemepoyético" debe ser una cadena de texto.',
+        'interrogatorio_sistema_nervioso.string' => 'El campo "Sistema nervioso" debe ser una cadena de texto.',
+        'interrogatorio_sistema_musculoesqueletico.string' => 'El campo "Sistema musculoesquelético" debe ser una cadena de texto.',
+        'interrogatorio_sistema_tegumentario.string' => 'El campo "Sistema tegumentario" debe ser una cadena de texto.'
     ]);
 
     
@@ -44,10 +54,12 @@ public function store(Request $request)
         $personalHereditario->save(); // Guardar en la base de datos
 
         DB::commit();
-        return redirect()->route('receta.show')->with('success', 'Antecedentes personales patológicos guardados con éxito.');
+        toastr()->success('Interrogatorio guardado con éxito');
+        return redirect()->route('interrogatorio.index');
     } catch (\Exception $e) {
         DB::rollback();
-        return back()->withErrors('Error al guardar los antecedentes personales patológicos: ' . $e->getMessage());
+        toastr()->error('Error al guardar el interrogatorio: ' . $e->getMessage());
+        return back();
     }
 }
 }

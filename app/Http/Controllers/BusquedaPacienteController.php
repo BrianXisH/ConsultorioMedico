@@ -28,9 +28,6 @@ class BusquedaPacienteController extends Controller
         $pacientes = $query->paginate(10);  // Paginación de resultados
 
         return view('components.BusquedaPacientes', ['pacientes' => $pacientes]);
-
-
-        
     }
 
     public function show($id)
@@ -55,10 +52,8 @@ class BusquedaPacienteController extends Controller
         $pacientes = $query->paginate(10);  // Paginación de resultados
 
         return view('components.consultaExistente.BusquedaPacientes', ['pacientes' => $pacientes]);
-
-
-        
     }
+
     public function show_nueva($id)
     {
         session(['selectedPacienteId' => $id]);  // Almacenar ID en sesión

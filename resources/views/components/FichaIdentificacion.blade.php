@@ -2,20 +2,65 @@
 
 @section('content')
 <div class="container" style="max-width: 800px;">
-    <h1>Informacion del Paciente</h1>
+
+    <div class="form-group">
+        <a href="{{ route('welcome') }}" class="btn btn-orange" style="position: absolute; left: 0;">Regresar al Inicio</a>
+        
+    </div>
+    
+<br>
+    <h1>Información del Paciente</h1>
+
     <form method="POST" action="{{ route('ficha.store') }}" class="form-container">
         @csrf
+
+        
+
+
+        <div class="form-group">
+
+            
+
+            <label>Tipo de consulta</label>
+            <select name="tipo_consulta" class="form-control @error('tipo_consulta') is-invalid @enderror">
+                <option value="">Seleccione</option>
+                <option value="Atencion Primaria" {{ old('tipo_consulta') == 'Atencion Primaria' ? 'selected' : '' }}>Atencion Primaria</option>
+                <option value="Especialista" {{ old('tipo_consulta') == 'Especialista' ? 'selected' : '' }}>Especialista</option>
+                <option value="Control y seguimiento" {{ old('tipo_consulta') == 'Control y seguimiento' ? 'selected' : '' }}>Control y seguimiento</option>
+                <option value="Prevención" {{ old('tipo_consulta') == 'Prevencion' ? 'selected' : '' }}>Prevencion</option>
+                <option value="Pediatrica" {{ old('tipo_consulta') == 'Pediatrica' ? 'selected' : '' }}>Pediatrica</option>
+            </select>
+            @error('tipo_consulta')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label>CURP</label>
+            <div class="input-group">
+                <input type="text" name="curp" placeholder="CURP" class="form-control @error('curp') is-invalid @enderror" value="{{ old('curp') }}">
+                @error('curp')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            
+            </div>
+        </div>
 
         <div class="form-group">
             <label>Nombre</label>
             <div class="input-group">
                 <input type="text" name="nombre_apellido_paterno" placeholder="Apellido paterno" class="form-control @error('nombre_apellido_paterno') is-invalid @enderror" value="{{ old('nombre_apellido_paterno') }}">
+                @error('nombre_apellido_paterno')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
                 <input type="text" name="nombre_apellido_materno" placeholder="Apellido materno" class="form-control @error('nombre_apellido_materno') is-invalid @enderror" value="{{ old('nombre_apellido_materno') }}">
+                @error('nombre_apellido_materno')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
                 <input type="text" name="nombre_nombres" placeholder="Nombre(s)" class="form-control @error('nombre_nombres') is-invalid @enderror" value="{{ old('nombre_nombres') }}">
+                @error('nombre_nombres')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
             </div>
-            @error('nombre_apellido_paterno', 'nombre_apellido_materno', 'nombre_nombres')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
         </div>
 
         <div class="form-group">
@@ -32,15 +77,28 @@
         <div class="form-group">
             <label>Lugar y fecha de nacimiento</label>
             <div class="input-group">
-                <input type="text" name="lugar_nacimiento_estado" placeholder="Estado" class="form-control @error('lugar_nacimiento_estado') is-invalid @enderror" value="{{ old('lugar_nacimiento_estado') }}">
-                <input type="text" name="lugar_nacimiento_ciudad" placeholder="Ciudad" class="form-control @error('lugar_nacimiento_ciudad') is-invalid @enderror" value="{{ old('lugar_nacimiento_ciudad') }}">
-                <input type="date" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento">
+                <select name="lugar_nacimiento_estado" id="nacimiento_estado" class="form-control @error('lugar_nacimiento_estado') is-invalid @enderror">
+                    <option value="">Seleccione Estado</option>
+                    @foreach($estados as $estado)
+                        <option value="{{ $estado->id }}" {{ old('lugar_nacimiento_estado') == $estado->id ? 'selected' : '' }}>{{ $estado->nombre }}</option>
+                    @endforeach
+                </select>
+                @error('lugar_nacimiento_estado')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+                <select name="lugar_nacimiento_ciudad" id="nacimiento_municipio" class="form-control @error('lugar_nacimiento_ciudad') is-invalid @enderror">
+                    <option value="">Seleccione Municipio</option>
+                </select>
+                @error('lugar_nacimiento_ciudad')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+                <input type="date" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento" min="1900-01-01" max="{{ date('Y-m-d') }}">
+                @error('fecha_nacimiento')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
             </div>
-            @error('lugar_nacimiento_estado', 'lugar_nacimiento_ciudad', 'fecha_nacimiento')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
         </div>
-
+        
         <div class="form-group">
             <label>Edad</label>
             <input type="text" name="edad_anios" id="edad_anios" class="form-control @error('edad_anios') is-invalid @enderror" value="{{ old('edad_anios') }}" readonly>
@@ -73,43 +131,17 @@
             @enderror
         </div>
 
+        <!-- Separador de Información de Contacto -->
+        <hr>
+        <h3>Información de Contacto</h3>
+
         <div class="form-group">
             <label>Estado</label>
             <select name="domicilio_estado" id="estado" class="form-control @error('domicilio_estado') is-invalid @enderror">
                 <option value="">Seleccione</option>
-                <!-- Lista de estados de México -->
-                <option value="Aguascalientes" {{ old('domicilio_estado') == 'Aguascalientes' ? 'selected' : '' }}>Aguascalientes</option>
-                <option value="Baja California" {{ old('domicilio_estado') == 'Baja California' ? 'selected' : '' }}>Baja California</option>
-                <option value="Baja California Sur" {{ old('domicilio_estado') == 'Baja California Sur' ? 'selected' : '' }}>Baja California Sur</option>
-                <option value="Campeche" {{ old('domicilio_estado') == 'Campeche' ? 'selected' : '' }}>Campeche</option>
-                <option value="Chiapas" {{ old('domicilio_estado') == 'Chiapas' ? 'selected' : '' }}>Chiapas</option>
-                <option value="Chihuahua" {{ old('domicilio_estado') == 'Chihuahua' ? 'selected' : '' }}>Chihuahua</option>
-                <option value="Ciudad de México" {{ old('domicilio_estado') == 'Ciudad de México' ? 'selected' : '' }}>Ciudad de México</option>
-                <option value="Coahuila" {{ old('domicilio_estado') == 'Coahuila' ? 'selected' : '' }}>Coahuila</option>
-                <option value="Colima" {{ old('domicilio_estado') == 'Colima' ? 'selected' : '' }}>Colima</option>
-                <option value="Durango" {{ old('domicilio_estado') == 'Durango' ? 'selected' : '' }}>Durango</option>
-                <option value="Estado de México" {{ old('domicilio_estado') == 'Estado de México' ? 'selected' : '' }}>Estado de México</option>
-                <option value="Guanajuato" {{ old('domicilio_estado') == 'Guanajuato' ? 'selected' : '' }}>Guanajuato</option>
-                <option value="Guerrero" {{ old('domicilio_estado') == 'Guerrero' ? 'selected' : '' }}>Guerrero</option>
-                <option value="Hidalgo" {{ old('domicilio_estado') == 'Hidalgo' ? 'selected' : '' }}>Hidalgo</option>
-                <option value="Jalisco" {{ old('domicilio_estado') == 'Jalisco' ? 'selected' : '' }}>Jalisco</option>
-                <option value="Michoacán" {{ old('domicilio_estado') == 'Michoacán' ? 'selected' : '' }}>Michoacán</option>
-                <option value="Morelos" {{ old('domicilio_estado') == 'Morelos' ? 'selected' : '' }}>Morelos</option>
-                <option value="Nayarit" {{ old('domicilio_estado') == 'Nayarit' ? 'selected' : '' }}>Nayarit</option>
-                <option value="Nuevo León" {{ old('domicilio_estado') == 'Nuevo León' ? 'selected' : '' }}>Nuevo León</option>
-                <option value="Oaxaca" {{ old('domicilio_estado') == 'Oaxaca' ? 'selected' : '' }}>Oaxaca</option>
-                <option value="Puebla" {{ old('domicilio_estado') == 'Puebla' ? 'selected' : '' }}>Puebla</option>
-                <option value="Querétaro" {{ old('domicilio_estado') == 'Querétaro' ? 'selected' : '' }}>Querétaro</option>
-                <option value="Quintana Roo" {{ old('domicilio_estado') == 'Quintana Roo' ? 'selected' : '' }}>Quintana Roo</option>
-                <option value="San Luis Potosí" {{ old('domicilio_estado') == 'San Luis Potosí' ? 'selected' : '' }}>San Luis Potosí</option>
-                <option value="Sinaloa" {{ old('domicilio_estado') == 'Sinaloa' ? 'selected' : '' }}>Sinaloa</option>
-                <option value="Sonora" {{ old('domicilio_estado') == 'Sonora' ? 'selected' : '' }}>Sonora</option>
-                <option value="Tabasco" {{ old('domicilio_estado') == 'Tabasco' ? 'selected' : '' }}>Tabasco</option>
-                <option value="Tamaulipas" {{ old('domicilio_estado') == 'Tamaulipas' ? 'selected' : '' }}>Tamaulipas</option>
-                <option value="Tlaxcala" {{ old('domicilio_estado') == 'Tlaxcala' ? 'selected' : '' }}>Tlaxcala</option>
-                <option value="Veracruz" {{ old('domicilio_estado') == 'Veracruz' ? 'selected' : '' }}>Veracruz</option>
-                <option value="Yucatán" {{ old('domicilio_estado') == 'Yucatán' ? 'selected' : '' }}>Yucatán</option>
-                <option value="Zacatecas" {{ old('domicilio_estado') == 'Zacatecas' ? 'selected' : '' }}>Zacatecas</option>
+                @foreach($estados as $estado)
+                    <option value="{{ $estado->id }}" {{ old('domicilio_estado') == $estado->id ? 'selected' : '' }}>{{ $estado->nombre }}</option>
+                @endforeach
             </select>
             @error('domicilio_estado')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -147,11 +179,14 @@
             <label>Número Exterior / Interior</label>
             <div class="input-group">
                 <input type="text" name="domicilio_num_exterior" placeholder="Núm. exterior" class="form-control @error('domicilio_num_exterior') is-invalid @enderror" value="{{ old('domicilio_num_exterior') }}">
+                @error('domicilio_num_exterior')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
                 <input type="text" name="domicilio_num_interior" placeholder="Núm. interior" class="form-control @error('domicilio_num_interior') is-invalid @enderror" value="{{ old('domicilio_num_interior') }}">
+                @error('domicilio_num_interior')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
             </div>
-            @error('domicilio_num_exterior', 'domicilio_num_interior')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
         </div>
 
         <div class="form-group">
@@ -172,19 +207,32 @@
 
         <div class="form-group">
             <input type="submit" value="Enviar" class="btn btn-primary">
+            
         </div>
-
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fechaNacimientoInput = document.getElementById('fecha_nacimiento');
+        
+        fechaNacimientoInput.addEventListener('change', function() {
+            var fechaNacimiento = new Date(this.value);
+            var fechaActual = new Date();
+            var edadMinima = 0; // Edad mínima permitida, puedes ajustarla según tus necesidades.
+            var edadMaxima = 150; // Edad máxima permitida, puedes ajustarla según tus necesidades.
+            
+            var diferenciaEnMilisegundos = fechaActual - fechaNacimiento;
+            var edadEnAnios = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25);
+            
+            if (edadEnAnios < edadMinima || edadEnAnios > edadMaxima) {
+                this.setCustomValidity('La fecha de nacimiento no es válida. La edad debe estar entre ' + edadMinima + ' y ' + edadMaxima + ' años.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    });
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -192,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const edadInput = document.getElementById('edad_anios');
     const estadoSelect = document.getElementById('estado');
     const municipioSelect = document.getElementById('municipio');
+    const nacimientoEstadoSelect = document.getElementById('nacimiento_estado');
+    const nacimientoMunicipioSelect = document.getElementById('nacimiento_municipio');
 
     fechaNacimientoInput.addEventListener('change', function() {
         const today = new Date();
@@ -204,18 +254,35 @@ document.addEventListener('DOMContentLoaded', function() {
         edadInput.value = age;
     });
 
-    estadoSelect.addEventListener('change', function() {
-        const estado = estadoSelect.value;
+    nacimientoEstadoSelect.addEventListener('change', function() {
+        const estadoId = nacimientoEstadoSelect.value;
         // Fetch municipios based on selected estado
-        fetch(`/api/municipios/${estado}`)
+        fetch(`/api/municipios/${estadoId}`)
+            .then(response => response.json())
+            .then(data => {
+                nacimientoMunicipioSelect.innerHTML = '<option value="">Seleccione</option>';
+                data.forEach(municipio => {
+                    nacimientoMunicipioSelect.innerHTML += `<option value="${municipio.id}">${municipio.nombre}</option>`;
+                });
+            })
+            .catch(error => console.error('Error fetching municipios:', error));
+    });
+
+    estadoSelect.addEventListener('change', function() {
+        const estadoId = estadoSelect.value;
+        // Fetch municipios based on selected estado
+        fetch(`/api/municipios/${estadoId}`)
             .then(response => response.json())
             .then(data => {
                 municipioSelect.innerHTML = '<option value="">Seleccione</option>';
                 data.forEach(municipio => {
-                    municipioSelect.innerHTML += `<option value="${municipio}">${municipio}</option>`;
+                    municipioSelect.innerHTML += `<option value="${municipio.id}">${municipio.nombre}</option>`;
                 });
-            });
+            })
+            .catch(error => console.error('Error fetching municipios:', error));
     });
+
+   
 });
 </script>
 @endsection

@@ -66,9 +66,10 @@ Route::get('/consultas/existente', [ConsultaController::class, 'crearExistente']
 Route::get('/registrar_paciente', [ConsultaController::class, 'registrar'])->name('paciente.registrar');
 
 
-
+// Rutas para generación de PDF
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
-Route::get('/generarpdf', [PdfController::class, 'recetanueva'])->name('receta.nueva');
+Route::get('/recetanueva', [PdfController::class, 'recetanueva'])->name('receta.nueva');
 
 
-
+Route::get('/api/municipios/{estado_id}', [IdentificationController::class, 'getMunicipios']);
+Route::get('/api/colonias/{municipio_id}', [IdentificationController::class, 'getColonias']);

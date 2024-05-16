@@ -51,9 +51,11 @@ public function store(Request $request)
         $personalHereditario->save(); // Guardar en la base de datos
 
         DB::commit();
-        return redirect()->route('interrogatorio.index')->with('success', 'Antecedentes personales patológicos guardados con éxito.');
+        toastr()->success('Exploración física guardada con éxito');
+        return redirect()->route('exploracion.index');
     } catch (\Exception $e) {
         DB::rollback();
-        return back()->withErrors('Error al guardar los antecedentes personales patológicos: ' . $e->getMessage());
+        toastr()->error('Error al guardar los antecedentes patológicos hereditarios: ' . $e->getMessage());
+        return back();
     }}
 }

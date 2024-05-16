@@ -38,6 +38,6 @@ class PacienteController extends Controller
         $paciente = new Paciente($data);
         $paciente->save();
 
-        return response()->json(['message' => 'Paciente creado con éxito'], 201);
+        //return response()->json(['message' => 'Paciente creado con éxito'], 201);
     }
 }

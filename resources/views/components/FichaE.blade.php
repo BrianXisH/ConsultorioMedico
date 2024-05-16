@@ -29,18 +29,11 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Enviar" class="btn btn-primary">
+            <input type="submit" value="Guardar ficha" class="btn btn-primary">
+            <a href="{{ route('pathological.index') }}" class="btn btn-orange">Siguiente</a>
         </div>
 
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        
     </form>
 </div>
 @endsection

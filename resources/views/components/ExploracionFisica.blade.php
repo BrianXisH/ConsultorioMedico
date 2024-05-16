@@ -74,7 +74,10 @@
 
 
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+            <input type="submit" value="Guardar exploracion fisica" class="btn btn-primary">
+            <a href="{{ route('interrogatorio.index') }}" class="btn btn-orange">Siguiente</a>
+        </div>
     </form>
 </div>
 @endsection

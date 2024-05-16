@@ -14,13 +14,15 @@ class Paciente extends Model
     protected $primaryKey = 'idpacientes'; // Ajustando la clave primaria.
 
     protected $fillable = [
+        'curp',
+        'tipo_consulta',
         'nombre_apellido_paterno',
         'nombre_apellido_materno',
         'nombre_nombres',
         'edad_anios',
         'genero_masculino',
         'genero_femenino',
-        'ugar_nacimiento_estado',
+        'lugar_nacimiento_estado',
         'lugar_nacimiento_ciudad',
         'fecha_nacimiento',
         'ocupacion',

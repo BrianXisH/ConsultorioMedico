@@ -41,10 +41,10 @@
             <label>Consume golosinas u otro tipo de alimentos entre las comidas:</label>
             <div>
                 <label>
-                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="true" {{ old('consume_golosinas_otros_alimentos_comidas') == 'true' ? 'checked' : '' }}> Sí
+                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="true" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == 'true' ? 'checked' : '' }}> Sí
                 </label>
                 <label style="margin: 15px">
-                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="false" {{ old('consume_golosinas_otros_alimentos_comidas') == 'false' ? 'checked' : '' }}> No
+                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="false" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == 'false' ? 'checked' : '' }}> No
                 </label>
             </div>
         </div>
@@ -66,7 +66,6 @@
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
-        
 
         <div class="form-group">
             <label>Factor Rh</label>
@@ -151,7 +150,7 @@
                 <label>Alimentos:</label>
                 <input type="text" name="antecedentes_alergicos_alimentos" class="form-control @error('antecedentes_alergicos_alimentos') is-invalid @enderror" value="{{ old('antecedentes_alergicos_alimentos') }}">
                 @error('antecedentes_alergicos_alimentos')
-                    <span class="invalid-feedback" role="alert"><strong>{{ message }}</strong></span>
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
             </div>
             <div>
@@ -193,7 +192,10 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+            <input type="submit" value="Guardar APNP" class="btn btn-primary">
+            <a href="{{ route('exploracion.index') }}" class="btn btn-orange">Siguiente</a>
+        </div>
     </form>
 </div>
 @endsection

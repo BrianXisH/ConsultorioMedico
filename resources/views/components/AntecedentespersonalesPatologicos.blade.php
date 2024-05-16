@@ -53,7 +53,10 @@
             @enderror
         </div>
 
-        <button style="margin: 20px" type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+            <input type="submit" value="Guardar APP" class="btn btn-primary">
+            <a href="{{ route('antecedenes_patologicos_hereditarios') }}" class="btn btn-orange">Siguiente</a>
+        </div>
     </form>
 </div>
 @endsection
