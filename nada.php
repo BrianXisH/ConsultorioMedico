@@ -29,7 +29,8 @@ Auth::routes();
     
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Ruta para mostrar el formulario de creación
+// Ruta para mostrar el formulario de creación de posts
+
 
 Route::get('/identification', [IdentificationController::class, 'index'])->name('identification');
 Route::post('/identification', [IdentificationController::class, 'procesarFormulario'])->name('ficha.store');
@@ -88,8 +89,7 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
         return view('admin.index');
     })->name('admin.index');
 
-    //Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::resource('admin/medicos', MedicoController::class, ['as' => 'admin']);
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::resource('medicos', MedicoController::class);
 });
 
@@ -98,5 +98,6 @@ Route::middleware(['auth', CheckRole::class . ':medico'])->group(function () {
         return view('welcome'); // La vista principal para médicos
     })->name('medicos.index');
 
-    //Route::get('/', [WelcomeController::class, 'estadisticas'])->name('welcome');
+    Route::get('/', [WelcomeController::class, 'estadisticas'])->name('welcome');
 });
+Auth::routes();
