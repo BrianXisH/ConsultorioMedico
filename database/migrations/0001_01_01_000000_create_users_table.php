@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id()->primary();
+            $table->string('cedula_profesional')->nullable();
+            $table->string('escuela_de_procedencia')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['medico', 'admin'])->default('medico');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -16,15 +17,25 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 10; $i++) {
-            DB::table('users')->insert([
+            $role = $i % 2 == 0 ? 'medico' : 'admin'; // Alternar entre 'medico' y 'admin'
+
+            $user = [
                 'name' => Str::random(10),
                 'email' => Str::random(10).'@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
+                'role' => $role,
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now()
-            ]);
+            ];
+
+            if ($role == 'medico') {
+                $user['cedula_profesional'] = Str::random(10);
+                $user['escuela_de_procedencia'] = Str::random(10);
+            }
+
+            DB::table('users')->insert($user);
         }
     }
 }

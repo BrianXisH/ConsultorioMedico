@@ -17,13 +17,16 @@ class PacientesTableSeeder extends Seeder
     public function run()
     {
         DB::table('pacientes')->insert([
+
+            'tipo_consulta' => Str::random(10),
+            'curp' => Str::random(10),
             'nombre_apellido_paterno' => Str::random(10),
             'nombre_apellido_materno' => Str::random(10),
             'nombre_nombres' => Str::random(10),
             'edad_anios' => rand(1, 100),
             'genero_masculino' => rand(0, 1) == 1,
             'genero_femenino' => rand(0, 1) == 1,
-            'ugar_nacimiento_estado' => Str::random(10),
+            'lugar_nacimiento_estado' => Str::random(10),
             'lugar_nacimiento_ciudad' => Str::random(10),
             'fecha_nacimiento' => now()->subYears(rand(1, 100)),
             'ocupacion' => Str::random(10),
