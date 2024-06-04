@@ -51,6 +51,8 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
     Route::get('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'index'])->name('pathological.index');
     Route::post('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'store'])->name('pathological.store');
 
+    Route::get('/pacientes/buscarConFicha', [BusquedaPacienteController::class, 'buscarPacientesConFicha'])->name('pacientes.buscarConFicha');
+
     Route::get('/busqueda_pacientes', [BusquedaPacienteController::class, 'index'])->name('pacientes.index');
     Route::get('/busqueda_pacientes/{id}', [BusquedaPacienteController::class, 'show'])->name('pacientes.show');
 

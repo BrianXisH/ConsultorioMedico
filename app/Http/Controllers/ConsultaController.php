@@ -42,7 +42,7 @@ class ConsultaController extends Controller
         // Aquí deberías incluir la lógica para manejar la creación de consultas desde datos existentes.
         // Podría ser un formulario que liste consultas anteriores para seleccionar y editar.
 
-        return redirect()->route('busqueda.index'); // Retorna la vista donde se gestionan las consultas existentes.
+        return redirect()->route('pacientes.buscarConFicha'); // Retorna la vista donde se gestionan las consultas existentes.
     }
 
     /**

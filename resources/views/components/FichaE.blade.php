@@ -7,14 +7,14 @@
         @csrf
         <div class="form-group">
             <label>Fecha de la consulta médica</label>
-            <input type="date" name="fecha_consulta" class="form-control @error('fecha_consulta') is-invalid @enderror" value="{{ old('fecha_consulta') }}">
+            <input type="date" name="fecha_consulta" class="form-control @error('fecha_consulta') is-invalid @enderror" value="{{ old('fecha_consulta') }}" id="fecha_consulta" readonly>
             @error('fecha_consulta')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
         <div class="form-group">
             <label>Fecha de la última consulta médica</label>
-            <input type="date" name="fecha_ultima_consulta" class="form-control @error('fecha_ultima_consulta') is-invalid @enderror" value="{{ old('fecha_ultima_consulta') }}">
+            <input type="date" name="fecha_ultima_consulta" class="form-control @error('fecha_ultima_consulta') is-invalid @enderror" value="{{ old('fecha_ultima_consulta') }}" id="fecha_ultima_consulta">
             @error('fecha_ultima_consulta')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
@@ -32,9 +32,17 @@
             <input type="submit" value="Guardar ficha" class="btn btn-primary">
             <a href="{{ route('pathological.index') }}" class="btn btn-orange">Siguiente</a>
         </div>
-
-        
     </form>
 </div>
-@endsection
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Establecer la fecha de la consulta médica con la fecha actual
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('fecha_consulta').value = today;
+        
+        // Establecer el atributo max de la fecha de la última consulta médica a la fecha actual
+        document.getElementById('fecha_ultima_consulta').setAttribute('max', today);
+    });
+</script>
+@endsection
