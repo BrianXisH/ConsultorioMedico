@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" style="text-align: center;">
     <h1 style="margin-bottom: 20px;">Búsqueda de Pacientes con Ficha</h1>
-    <form method="GET" action="{{ route('pacientes.buscar') }}" style="margin-bottom: 20px;">
+    <form method="GET" action="{{ route('pacientes.buscarConFicha') }}" style="margin-bottom: 20px;">
         <input type="text" name="search" placeholder="Buscar pacientes..." value="{{ request('search') }}" style="margin-right: 10px; padding: 5px;">
         <button type="submit" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Buscar</button>
     </form>
