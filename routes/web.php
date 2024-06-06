@@ -16,6 +16,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\IdentificacionEController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CitaController;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/medicos/{id}/edit', [AdminController::class, 'edit'])->name('admin.medicos.edit');
     Route::put('/admin/medicos/{id}', [AdminController::class, 'update'])->name('admin.medicos.update');
     Route::delete('/admin/medicos/{id}', [AdminController::class, 'destroy'])->name('admin.medicos.destroy');
+    Route::get('/admin/medicos/{id}/historial', [AdminController::class, 'historial'])->name('admin.medicos.historial');
 });
 
 Route::middleware(['auth', 'role:medico'])->group(function () {
@@ -67,7 +69,19 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
     Route::get('/nueva_consulta', [ConsultaController::class, 'crearNueva'])->name('consultas.nueva');
     Route::get('/consultas/existente', [ConsultaController::class, 'crearExistente'])->name('consultas.existente');
     Route::get('/registrar_paciente', [ConsultaController::class, 'registrar'])->name('paciente.registrar');
+
+    Route::get('/citas', [CitaController::class, 'index'])->name('citas.index');
+    Route::get('/citas/create', [CitaController::class, 'create'])->name('citas.create');
+    Route::post('/citas', [CitaController::class, 'store'])->name('citas.store');
+   
 });
+
+
+
+
+
+
+
 
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
 Route::get('/recetanueva', [PdfController::class, 'recetanueva'])->name('receta.nueva');

@@ -45,5 +45,10 @@ class Paciente extends Model
         return $this->hasMany(FicIdent::class, 'pacientes_idpacientes', 'idpacientes');
     }
 
+    public function citas()
+    {
+        return $this->hasMany(Cita::class, 'paciente_id', 'idpacientes');
+    }
+
     
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,9 @@ class Consulta extends Model
     protected $fillable = [
         'receta',
         'diagnostico',
-        // Otros campos según sea necesario
+        'user_id',  // Asegúrate de que este campo esté en la tabla
+        'enfermedades_idenfermedades',
+        'fic_ident_idfi'
     ];
 
     /**
@@ -23,7 +24,7 @@ class Consulta extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'users_idusers', 'idusers');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id'); // Cambiado a 'user_id' y 'id'
     }
 
     /**
@@ -41,6 +42,4 @@ class Consulta extends Model
     {
         return $this->belongsTo('App\Models\FicIdent', 'fic_ident_idfi', 'idfi');
     }
-
-   
 }

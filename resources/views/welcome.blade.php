@@ -28,11 +28,27 @@
                     </button>
                 </div>
             </div>
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-4">
                 <div class="card-body text-center">
                     <h5 class="card-title">Consulta existente</h5>
                     <button onclick="window.location.href='{{ route('consultas.existente') }}'" class="btn btn-orange">
                         <img src="{{ asset('images/existente.png') }}" alt="Consulta Existente" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Agendar Cita</h5>
+                    <button onclick="window.location.href='{{ route('citas.create') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/cita.png') }}" alt="Agendar Cita" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ver Citas</h5>
+                    <button onclick="window.location.href='{{ route('citas.index') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/ver_citas.png') }}" alt="Ver Citas" height="40">
                     </button>
                 </div>
             </div>

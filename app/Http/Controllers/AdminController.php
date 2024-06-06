@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Consulta;
 
 class AdminController extends Controller
 {
@@ -74,5 +75,13 @@ class AdminController extends Controller
         $medico->delete();
         
         return redirect()->route('admin.medicos.index')->with('success', 'Médico eliminado exitosamente');
+    }
+
+    public function historial($id)
+    {
+        $medico = User::findOrFail($id);
+        $consultas = Consulta::where('user_id', $id)->with('ficIdent')->get();
+
+        return view('admin.medicos.historial', compact('medico', 'consultas'));
     }
 }

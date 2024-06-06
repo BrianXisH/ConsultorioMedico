@@ -35,6 +35,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este médico?')">Eliminar</button>
                         </form>
+                        <a href="{{ route('admin.medicos.historial', $medico->id) }}" class="btn btn-info">Ver Historial</a>
                     </td>
                 </tr>
             @endforeach

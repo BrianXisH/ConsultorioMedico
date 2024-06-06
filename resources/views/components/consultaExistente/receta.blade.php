@@ -21,6 +21,8 @@
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Fecha de Registro</th>
+                <th>Cédula Profesional</th>
+                <th>Escuela de Procedencia</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +30,8 @@
                 <td>{{ Auth::user()->name }}</td>
                 <td>{{ Auth::user()->email }}</td>
                 <td>{{ Auth::user()->created_at->format('d-m-Y') }}</td>
+                <td>{{ Auth::user()->cedula_profesional }}</td>
+                <td>{{ Auth::user()->escuela_de_procedencia }}</td>
             </tr>
         </tbody>
     </table>
