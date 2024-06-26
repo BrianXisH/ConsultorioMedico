@@ -75,6 +75,10 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
     Route::get('/citas', [CitaController::class, 'index'])->name('citas.index');
     Route::get('/citas/create', [CitaController::class, 'create'])->name('citas.create');
     Route::post('/citas', [CitaController::class, 'store'])->name('citas.store');
+
+    Route::get('/busqueda_pacientes/{id}/consultas', [BusquedaPacienteController::class, 'verConsultas'])->name('pacientes.consultas');
+    
+    Route::get('/busqueda_pacientes/{id}/antecedentes', [BusquedaPacienteController::class, 'verAntecedentes'])->name('pacientes.antecedentes');
    
 });
 

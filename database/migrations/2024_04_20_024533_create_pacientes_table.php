@@ -15,7 +15,6 @@ class CreatePacientesTable extends Migration
     {
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('idpacientes');
-            $table->string('tipo_consulta', 45)->nullable();
             $table->string('curp', 18);
             $table->string('nombre_apellido_paterno', 45);
             $table->string('nombre_apellido_materno', 45);

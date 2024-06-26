@@ -14,6 +14,7 @@ class CreateFicIdentTable extends Migration
             $table->dateTime('fecha_consulta');
             $table->dateTime('fecha_ultima_consulta');
             $table->string('motivo_ultima_consulta', 45);
+            $table->string('tipo_consulta', 45)->nullable();
 
             $table->foreign('pacientes_idpacientes')
                   ->references('idpacientes')

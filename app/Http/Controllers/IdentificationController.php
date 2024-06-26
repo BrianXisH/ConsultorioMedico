@@ -24,7 +24,7 @@ class IdentificationController extends Controller
     public function procesarFormulario(Request $request)
     {
         $validatedData = $request->validate([
-            'tipo_consulta' => 'required|max:45',
+            
             'curp' => 'required|size:18',
             'nombre_apellido_paterno' => 'required|max:45',
             'nombre_apellido_materno' => 'required|max:45',
@@ -47,7 +47,6 @@ class IdentificationController extends Controller
             'telefono_oficina' => 'nullable|max:45',
         ], [
             'curp.required' => 'La CURP es obligatoria.',
-            'tipo_consulta.required' => 'El tipo de consulta es obligatorio.',
             'nombre_apellido_paterno.required' => 'El apellido paterno es obligatorio.',
             'nombre_apellido_materno.required' => 'El apellido materno es obligatorio.',
             'nombre_nombres.required' => 'El nombre es obligatorio.',
@@ -70,6 +69,10 @@ class IdentificationController extends Controller
             'telefono.max' => 'El teléfono no debe superar los 45 caracteres.',
             'telefono_oficina.max' => 'El teléfono de oficina no debe superar los 45 caracteres.',
         ]);
+        $pacienteExistente = Paciente::where('curp', $validatedData['curp'])->first();
+        if ($pacienteExistente) {
+            return back()->withErrors(['curp' => 'Ya existe un paciente registrado con esta CURP.']);
+        }
 
         // Transacción para asegurar la integridad de los datos
         DB::beginTransaction();

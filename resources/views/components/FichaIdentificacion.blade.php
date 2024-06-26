@@ -17,23 +17,7 @@
         
 
 
-        <div class="form-group">
-
-            
-
-            <label>Tipo de consulta</label>
-            <select name="tipo_consulta" class="form-control @error('tipo_consulta') is-invalid @enderror">
-                <option value="">Seleccione</option>
-                <option value="Atencion Primaria" {{ old('tipo_consulta') == 'Atencion Primaria' ? 'selected' : '' }}>Atencion Primaria</option>
-                <option value="Especialista" {{ old('tipo_consulta') == 'Especialista' ? 'selected' : '' }}>Especialista</option>
-                <option value="Control y seguimiento" {{ old('tipo_consulta') == 'Control y seguimiento' ? 'selected' : '' }}>Control y seguimiento</option>
-                <option value="Prevención" {{ old('tipo_consulta') == 'Prevencion' ? 'selected' : '' }}>Prevencion</option>
-                <option value="Pediatrica" {{ old('tipo_consulta') == 'Pediatrica' ? 'selected' : '' }}>Pediatrica</option>
-            </select>
-            @error('tipo_consulta')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
+        
         <div class="form-group">
             <label>CURP</label>
             <div class="input-group">

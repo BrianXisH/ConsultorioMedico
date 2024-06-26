@@ -19,6 +19,7 @@ class FicIdent extends Model
         'fecha_consulta',
         'fecha_ultima_consulta',
         'motivo_ultima_consulta',
+        'tipo_consulta',
     ];
 
     public function paciente()

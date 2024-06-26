@@ -48,7 +48,7 @@ class FamilyHistoryController extends Controller
 
             // Mostrar mensaje de éxito
             toastr()->success('Antecedentes patológicos hereditarios guardados con éxito');
-            toastr()->forget('success');
+            
 
 
             return redirect()->route('antecedenes_patologicos_hereditarios');

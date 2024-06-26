@@ -16,7 +16,6 @@
                 <th>SEXO</th>
                 <th>TELÉFONO</th>
                 <th>CURP</th>
-                <th>TIPO DE CONSULTA</th>
                 <th>ACCIONES</th>
             </tr>
         </thead>
@@ -28,9 +27,9 @@
                     <td>{{ $paciente->genero_masculino ? 'Masculino' : ($paciente->genero_femenino ? 'Femenino' : 'No especificado') }}</td>
                     <td>{{ $paciente->telefono }}</td>
                     <td>{{ $paciente->curp }}</td>
-                    <td>{{ $paciente->tipo_consulta }}</td>
                     <td>
                         <a href="{{ route('pacientes.show', $paciente->idpacientes) }}" style="text-decoration: none; padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Seleccionar</a>
+                        <a href="{{ route('pacientes.consultas', $paciente->idpacientes) }}" style="text-decoration: none; padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Ver Consultas</a>
                     </td>
                 </tr>
             @endforeach

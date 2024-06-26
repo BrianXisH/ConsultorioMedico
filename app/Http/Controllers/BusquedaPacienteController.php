@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Paciente;
+use App\Models\FicIdent;
 use Illuminate\Support\Facades\DB;
 
 class BusquedaPacienteController extends Controller
@@ -39,20 +40,35 @@ class BusquedaPacienteController extends Controller
 
     // Método para buscar pacientes con ficha en fic_ident
     public function buscarPacientesConFicha(Request $request)
+{
+    $search = $request->get('search');
+
+    // Obtener los pacientes que tienen ficha en fic_ident y evitar duplicados
+    $pacientes = DB::table('pacientes')
+        ->join('fic_ident', 'pacientes.idpacientes', '=', 'fic_ident.pacientes_idpacientes')
+        ->select('pacientes.*')
+        ->when($search, function($query) use ($search) {
+            return $query->where('pacientes.nombre_nombres', 'like', '%' . $search . '%')
+                         ->orWhere('pacientes.nombre_apellido_paterno', 'like', '%' . $search . '%')
+                         ->orWhere('pacientes.nombre_apellido_materno', 'like', '%' . $search . '%');
+        })
+        ->groupBy('pacientes.idpacientes')  // Agrupar por ID del paciente para evitar duplicados
+        ->paginate(10);
+
+    return view('components.consultaExistente.BusquedaPacientesConFicha', compact('pacientes'));
+}
+public function verConsultas($id)
     {
-        $search = $request->get('search');
+        $paciente = Paciente::findOrFail($id); // Obtener el paciente por su ID
+        $consultas = FicIdent::where('pacientes_idpacientes', $id)->paginate(10); // Obtener las consultas del paciente
 
-        // Obtener los pacientes que tienen ficha en fic_ident
-        $pacientes = DB::table('pacientes')
-            ->join('fic_ident', 'pacientes.idpacientes', '=', 'fic_ident.pacientes_idpacientes')
-            ->select('pacientes.*')
-            ->when($search, function($query) use ($search) {
-                return $query->where('pacientes.nombre_nombres', 'like', '%' . $search . '%')
-                             ->orWhere('pacientes.nombre_apellido_paterno', 'like', '%' . $search . '%')
-                             ->orWhere('pacientes.nombre_apellido_materno', 'like', '%' . $search . '%');
-            })
-            ->paginate(10);
-
-        return view('components.consultaExistente.BusquedaPacientesConFicha', compact('pacientes'));
+        return view('pacientes.consultas', compact('paciente', 'consultas'));
     }
+    public function verAntecedentes($id)
+    {
+        $paciente = Paciente::findOrFail($id); // Obtener el paciente por su ID
+
+        return view('pacientes.antecedentes', compact('paciente'));
+    }
+
 }

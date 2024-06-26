@@ -15,7 +15,6 @@ class Paciente extends Model
 
     protected $fillable = [
         'curp',
-        'tipo_consulta',
         'nombre_apellido_paterno',
         'nombre_apellido_materno',
         'nombre_nombres',

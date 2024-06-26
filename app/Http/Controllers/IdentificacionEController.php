@@ -21,10 +21,12 @@ class IdentificacionEController extends Controller
     public function procesarFormulario(Request $request)
     {
         $request->validate([
+            'tipo_consulta' => 'required',
             'fecha_consulta' => 'required|date',
             'fecha_ultima_consulta' => 'required|date',
             'motivo_ultima_consulta' => 'required|max:45',
         ], [
+            'tipo_consulta.required' => 'El tipo de consulta es obligatorio',
             'fecha_consulta.required' => 'La fecha de consulta es obligatoria.',
             'fecha_consulta.date' => 'La fecha de consulta no tiene un formato válido.',
             'fecha_ultima_consulta.required' => 'La fecha de la última consulta es obligatoria.',
@@ -48,6 +50,7 @@ class IdentificacionEController extends Controller
                 'fecha_consulta' => $request->input('fecha_consulta'),
                 'fecha_ultima_consulta' => $request->input('fecha_ultima_consulta'),
                 'motivo_ultima_consulta' => $request->input('motivo_ultima_consulta'),
+                'tipo_consulta' => $request->input('tipo_consulta'),
             ]);
             $ficha->save();
 
