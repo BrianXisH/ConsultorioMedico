@@ -24,12 +24,13 @@
         <div class="form-group">
             <label>Utiliza auxiliares de higiene bucal:</label>
             <div>
-                <label>
-                    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="true" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == 'true' ? 'checked' : '' }}> Sí
-                </label>
-                <label style="margin: 15px">
-                    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="false" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == 'false' ? 'checked' : '' }}> No
-                </label>
+            <label>
+    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="1" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '1' ? 'checked' : '' }}> Sí
+</label>
+<label style="margin: 15px">
+    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="0" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '0' ? 'checked' : '' }}> No
+</label>
+
             </div>
             <input type="text" name="habitos_higienicos_auxiliares_higiene_bucal_cuales" placeholder="¿Cuáles?" class="form-control @error('habitos_higienicos_auxiliares_higiene_bucal_cuales') is-invalid @enderror" value="{{ old('habitos_higienicos_auxiliares_higiene_bucal_cuales') }}">
             @error('habitos_higienicos_auxiliares_higiene_bucal_cuales')

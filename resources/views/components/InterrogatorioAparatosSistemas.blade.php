@@ -105,14 +105,16 @@
              <label for="temperatura">Temperatura (°C)</label>
              <input type="text" id="temperatura" name="temperatura" class="form-control" placeholder="Ingrese la temperatura corporal" value="{{ old('temperatura') }}" style="width: 100%;">
          </div>
- 
-         
-     </form>
 
-     <div class="form-group">
+         <div class="form-group">
         <input type="submit" value="Guardar interrogatorio por aparatos y sistemas" class="btn btn-primary">
         <a href="{{ route('receta.show') }}" class="btn btn-orange">Siguiente</a>
     </div>
+     
+ </div>
+ 
+         
+    
      
  </div>
  @endsection

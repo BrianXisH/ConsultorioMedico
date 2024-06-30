@@ -20,10 +20,10 @@ class InterrogatorioController extends Controller
 
 public function store(Request $request)
 {
-
     $ultimaFichaId = session('selectedPacienteId');
-     // Validar los datos recibidos del formularios
-     $validatedData = $request->validate([
+    
+    // Validar los datos recibidos del formulario
+    $validatedData = $request->validate([
         'interrogatorio_aparato_digestivo' => 'nullable|string|max:255',
         'interrogatorio_aparato_respiratorio' => 'nullable|string|max:255',
         'interrogatorio_cardiovascular' => 'nullable|string|max:255',
@@ -32,26 +32,24 @@ public function store(Request $request)
         'interrogatorio_sistema_hemepoyetico' => 'nullable|string|max:255',
         'interrogatorio_sistema_nervioso' => 'nullable|string|max:255',
         'interrogatorio_sistema_musculoesqueletico' => 'nullable|string|max:255',
-        'interrogatorio_sistema_tegumentario' => 'nullable|string|max:255'
-    ], [
-        'interrogatorio_aparato_digestivo.string' => 'El campo "Aparato digestivo" debe ser una cadena de texto.',
-        'interrogatorio_aparato_respiratorio.string' => 'El campo "Aparato respiratorio" debe ser una cadena de texto.',
-        'interrogatorio_cardiovascular.string' => 'El campo "Cardiovascular" debe ser una cadena de texto.',
-        'interrogatorio_aparato_genitourinario.string' => 'El campo "Aparato genitourinario" debe ser una cadena de texto.',
-        'interrogatorio_sistema_endocrino.string' => 'El campo "Sistema endocrino" debe ser una cadena de texto.',
-        'interrogatorio_sistema_hemepoyetico.string' => 'El campo "Sistema hemepoyético" debe ser una cadena de texto.',
-        'interrogatorio_sistema_nervioso.string' => 'El campo "Sistema nervioso" debe ser una cadena de texto.',
-        'interrogatorio_sistema_musculoesqueletico.string' => 'El campo "Sistema musculoesquelético" debe ser una cadena de texto.',
-        'interrogatorio_sistema_tegumentario.string' => 'El campo "Sistema tegumentario" debe ser una cadena de texto.'
+        'interrogatorio_sistema_tegumentario' => 'nullable|string|max:255',
+        'habitus_exterior' => 'nullable|string|max:255',
+        'peso' => 'nullable|numeric',
+        'talla' => 'nullable|numeric',
+        'complexion' => 'nullable|string|max:255',
+        'frecuencia_cardiaca' => 'nullable|numeric',
+        'sistolica' => 'nullable|numeric',
+        'diastolica' => 'nullable|numeric',
+        'frecuencia_respiratoria' => 'nullable|numeric',
+        'temperatura' => 'nullable|numeric',
     ]);
 
-    
     DB::beginTransaction();
     try {
         // Combinar los datos validados con el ID de la última ficha
-        $eprsonalHereditario = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
-        $personalHereditario = new Ipsa($eprsonalHereditario);
-        $personalHereditario->save(); // Guardar en la base de datos
+        $personalHereditarioData = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
+        $personalHereditario = new Ipsa($personalHereditarioData);
+        $personalHereditario->save();
 
         DB::commit();
         toastr()->success('Interrogatorio guardado con éxito');
@@ -62,4 +60,5 @@ public function store(Request $request)
         return back();
     }
 }
+
 }
