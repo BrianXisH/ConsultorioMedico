@@ -69,9 +69,7 @@ class NoPatologicoController extends Controller
             'hospitalizado'
         ];
 
-        foreach ($booleanFields as $field) {
-            $validatedData[$field] = $request->has($field) ? 1 : 0;
-        }
+        
 
         // Iniciar una transacción para asegurar la integridad de los datos
         DB::beginTransaction();
