@@ -35,10 +35,12 @@ class CreateIpsaTable extends Migration
             $table->integer('diastolica')->nullable();
             $table->integer('frecuencia_respiratoria')->nullable();
             $table->decimal('temperatura', 4, 2)->nullable();
+            
             $table->foreign('fic_ident_idfi')
                   ->references('idfi')
                   ->on('fic_ident')
                   ->onDelete('set null');
+            
         });
     }
 

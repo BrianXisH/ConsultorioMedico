@@ -12,6 +12,7 @@ class Aph extends Model
 
     public $timestamps = false;
     protected $table = 'aph';  // Asegurando que Laravel use el nombre correcto de la tabla.
+    protected $primaryKey = 'idaph'; // Ajustando la clave primaria.
 
     protected $fillable = [
         'fic_ident_idfi',

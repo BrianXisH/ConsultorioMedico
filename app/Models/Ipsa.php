@@ -11,6 +11,8 @@ class Ipsa extends Model
 
     public $timestamps = false;
     protected $table = 'ipsa';  // Asegurando que Laravel use el nombre correcto de la tabla.
+    protected $primaryKey = 'idipsa'; // Ajustando la clave primaria.
+
 
     protected $fillable = [
         'fic_ident_idfi',

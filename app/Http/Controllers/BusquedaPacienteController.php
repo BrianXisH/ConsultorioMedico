@@ -15,22 +15,25 @@ class BusquedaPacienteController extends Controller
     }
 
     public function index(Request $request)
-    {
-        $query = Paciente::query();
+{
+    $query = Paciente::leftJoin('fic_ident', 'pacientes.idpacientes', '=', 'fic_ident.pacientes_idpacientes')
+                     ->select('pacientes.*')
+                     ->whereNull('fic_ident.pacientes_idpacientes');
 
-        if ($request->has('search')) {
-            $search = $request->get('search');
-            $query->where(function($q) use ($search) {
-                $q->where('nombre_apellido_paterno', 'LIKE', "%{$search}%")
-                  ->orWhere('nombre_apellido_materno', 'LIKE', "%{$search}%")
-                  ->orWhere('nombre_nombres', 'LIKE', "%{$search}%");
-            });
-        }
-
-        $pacientes = $query->paginate(10);  // Paginación de resultados
-
-        return view('components.BusquedaPacientes', ['pacientes' => $pacientes]);
+    if ($request->has('search')) {
+        $search = $request->get('search');
+        $query->where(function($q) use ($search) {
+            $q->where('nombre_apellido_paterno', 'LIKE', "%{$search}%")
+              ->orWhere('nombre_apellido_materno', 'LIKE', "%{$search}%")
+              ->orWhere('nombre_nombres', 'LIKE', "%{$search}%");
+        });
     }
+
+    $pacientes = $query->paginate(10);  // Paginación de resultados
+
+    return view('components.BusquedaPacientes', ['pacientes' => $pacientes]);
+}
+
 
     public function show($id)
     {
@@ -67,8 +70,9 @@ public function verConsultas($id)
     public function verAntecedentes($id)
     {
         $paciente = Paciente::findOrFail($id); // Obtener el paciente por su ID
+        $fichaReciente = FicIdent::where('pacientes_idpacientes', $id)->latest()->first(); // Obtener la ficha más reciente del paciente
 
-        return view('pacientes.antecedentes', compact('paciente'));
+        return view('pacientes.antecedentes', compact('paciente', 'fichaReciente'));
     }
 
 }

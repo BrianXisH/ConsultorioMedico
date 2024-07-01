@@ -46,12 +46,23 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
 
     Route::get('/antecedentes_patologicos_hereditarios', [FamilyHistoryController::class, 'index'])->name('antecedenes_patologicos_hereditarios');
     Route::post('/antecedentes_patologicos_hereditarios', [FamilyHistoryController::class, 'store'])->name('familyHistory.store');
+    //ver y editar antecedentes personales patologicos
+    Route::get('/antecedentes_patologicos_hereditarios/{fic_ident_idfi}/edit', [FamilyHistoryController::class, 'edit'])->name('familyHistory.edit');
+    Route::put('/antecedentes_patologicos_hereditarios/{fic_ident_idfi}', [FamilyHistoryController::class, 'update'])->name('familyHistory.update');
+    Route::post('/antecedentes_patologicos_hereditarios', [FamilyHistoryController::class, 'store'])->name('familyHistory.store');
 
     Route::get('/antecedentes_personales_no_patologicos', [NoPatologicoController::class, 'index'])->name('nonPathological.create');
     Route::post('/antecedentes_personales_no_patologicos', [NoPatologicoController::class, 'store'])->name('nonPathological.store');
+    //ver y editar personla patologico
+    Route::get('/nonPathological/{fic_ident_idfi}/edit', [NoPatologicoController::class, 'edit'])->name('nonPathological.edit');
+    Route::put('/nonPathological/{fic_ident_idfi}', [NoPatologicoController::class, 'update'])->name('nonPathological.update');
 
     Route::get('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'index'])->name('pathological.index');
     Route::post('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'store'])->name('pathological.store');
+    //ver y editar app
+    
+    Route::get('/pathological/{fic_ident_idfi}/edit', [PersonalPatologicoController::class, 'edit'])->name('pathological.edit');
+    Route::put('/pathological/{fic_ident_idfi}', [PersonalPatologicoController::class, 'update'])->name('pathological.update');
 
     Route::get('/pacientes/buscarConFicha', [BusquedaPacienteController::class, 'buscarPacientesConFicha'])->name('pacientes.buscarConFicha');
 
@@ -63,10 +74,16 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
 
     Route::get('/exploracion', [ExploracionFisicaController::class, 'index'])->name('exploracion.index');
     Route::post('/exploracion', [ExploracionFisicaController::class, 'store'])->name('exploracion.store');
+    //ver y editar exploracion fisica
+    Route::get('/exploracion/{fic_ident_idfi}/edit', [ExploracionFisicaController::class, 'edit'])->name('exploracion.edit');
+    Route::put('/exploracion/{fic_ident_idfi}', [ExploracionFisicaController::class, 'update'])->name('exploracion.update');
 
     Route::get('/interrogatorio', [InterrogatorioController::class, 'index'])->name('interrogatorio.index');
     Route::post('/interrogatorio', [InterrogatorioController::class, 'store'])->name('interrogatorio.store');
     Route::post('/habitus', [HabitusController::class, 'store'])->name('habitus.store');
+    //ver y editar interrogatorio
+    Route::get('/interrogatorio/{fic_ident_idfi}/edit', [InterrogatorioController::class, 'edit'])->name('interrogatorio.edit');
+    Route::put('/interrogatorio/{fic_ident_idfi}', [InterrogatorioController::class, 'update'])->name('interrogatorio.update');
 
     Route::get('/nueva_consulta', [ConsultaController::class, 'crearNueva'])->name('consultas.nueva');
     Route::get('/consultas/existente', [ConsultaController::class, 'crearExistente'])->name('consultas.existente');

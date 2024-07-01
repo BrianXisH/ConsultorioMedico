@@ -24,13 +24,12 @@
         <div class="form-group">
             <label>Utiliza auxiliares de higiene bucal:</label>
             <div>
-            <label>
-    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="1" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '1' ? 'checked' : '' }}> Sí
-</label>
-<label style="margin: 15px">
-    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="0" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '0' ? 'checked' : '' }}> No
-</label>
-
+                <label>
+                    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="1" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '1' ? 'checked' : '' }}> Sí
+                </label>
+                <label style="margin: 15px">
+                    <input type="radio" name="habitos_higienicos_utiliza_auxiliares_higiene_bucal" value="0" {{ old('habitos_higienicos_utiliza_auxiliares_higiene_bucal') == '0' ? 'checked' : '' }}> No
+                </label>
             </div>
             <input type="text" name="habitos_higienicos_auxiliares_higiene_bucal_cuales" placeholder="¿Cuáles?" class="form-control @error('habitos_higienicos_auxiliares_higiene_bucal_cuales') is-invalid @enderror" value="{{ old('habitos_higienicos_auxiliares_higiene_bucal_cuales') }}">
             @error('habitos_higienicos_auxiliares_higiene_bucal_cuales')
@@ -42,10 +41,10 @@
             <label>Consume golosinas u otro tipo de alimentos entre las comidas:</label>
             <div>
                 <label>
-                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="true" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == 'true' ? 'checked' : '' }}> Sí
+                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="1" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == '1' ? 'checked' : '' }}> Sí
                 </label>
                 <label style="margin: 15px">
-                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="false" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == 'false' ? 'checked' : '' }}> No
+                    <input type="radio" name="habitos_higienicos_consume_golosinas_otros_alimentos_comidas" value="0" {{ old('habitos_higienicos_consume_golosinas_otros_alimentos_comidas') == '0' ? 'checked' : '' }}> No
                 </label>
             </div>
         </div>
@@ -80,10 +79,10 @@
             <label>Cuenta con Cartilla de vacunación:</label>
             <div>
                 <label>
-                    <input type="radio" name="cuenta_cartilla_vacunacion" value="true" {{ old('cuenta_cartilla_vacunacion') == 'true' ? 'checked' : '' }}> Sí
+                    <input type="radio" name="cuenta_cartilla_vacunacion" value="1" {{ old('cuenta_cartilla_vacunacion') == '1' ? 'checked' : '' }}> Sí
                 </label>
                 <label style="margin: 15px">
-                    <input type="radio" name="cuenta_cartilla_vacunacion" value="false" {{ old('cuenta_cartilla_vacunacion') == 'false' ? 'checked' : '' }}> No
+                    <input type="radio" name="cuenta_cartilla_vacunacion" value="0" {{ old('cuenta_cartilla_vacunacion') == '0' ? 'checked' : '' }}> No
                 </label>
             </div>
         </div>
@@ -92,10 +91,10 @@
             <label>Tiene el esquema completo:</label>
             <div>
                 <label>
-                    <input type="radio" name="esquema_completo" value="true" {{ old('esquema_completo') == 'true' ? 'checked' : '' }}> Sí
+                    <input type="radio" name="esquema_completo" value="1" {{ old('esquema_completo') == '1' ? 'checked' : '' }}> Sí
                 </label>
                 <label style="margin: 15px">
-                    <input type="radio" name="esquema_completo" value="false" {{ old('esquema_completo') == 'false' ? 'checked' : '' }}> No
+                    <input type="radio" name="esquema_completo" value="0" {{ old('esquema_completo') == '0' ? 'checked' : '' }}> No
                 </label>
             </div>
         </div>
@@ -112,10 +111,10 @@
             <label>Adicciones:</label>
             <div>
                 <label>
-                    <input type="checkbox" name="adicciones_tabaco" value="true" {{ old('adicciones_tabaco') == 'true' ? 'checked' : '' }}> Tabaco
+                    <input type="checkbox" name="adicciones_tabaco" value="1" {{ old('adicciones_tabaco') == '1' ? 'checked' : '' }}> Tabaco
                 </label>
                 <label style="margin: 15px">
-                    <input type="checkbox" name="adicciones_alcohol" value="true" {{ old('adicciones_alcohol') == 'true' ? 'checked' : '' }}> Alcohol
+                    <input type="checkbox" name="adicciones_alcohol" value="1" {{ old('adicciones_alcohol') == '1' ? 'checked' : '' }}> Alcohol
                 </label>
             </div>
         </div>
@@ -167,10 +166,10 @@
             <label>Ha sido hospitalizado:</label>
             <div>
                 <label>
-                    <input type="radio" name="hospitalizado" value="true" {{ old('hospitalizado') == 'true' ? 'checked' : '' }}> Sí
+                    <input type="radio" name="hospitalizado" value="1" {{ old('hospitalizado') == '1' ? 'checked' : '' }}> Sí
                 </label>
                 <label style="margin: 15px">
-                    <input type="radio" name="hospitalizado" value="false" {{ old('hospitalizado') == 'false' ? 'checked' : '' }}> No
+                    <input type="radio" name="hospitalizado" value="0" {{ old('hospitalizado') == '0' ? 'checked' : '' }}> No
                 </label>
             </div>
             <label for="hospitalizationDate">Fecha</label>

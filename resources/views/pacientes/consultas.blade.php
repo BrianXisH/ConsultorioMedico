@@ -11,7 +11,6 @@
                 <th>Fecha Última Consulta</th>
                 <th>Motivo Última Consulta</th>
                 <th>Tipo de Consulta</th>
-                <th>Acciones</th> <!-- Nuevo encabezado para acciones -->
             </tr>
         </thead>
         <tbody>
@@ -21,9 +20,6 @@
                     <td>{{ $consulta->fecha_ultima_consulta }}</td>
                     <td>{{ $consulta->motivo_ultima_consulta }}</td>
                     <td>{{ $consulta->tipo_consulta }}</td>
-                    <td>
-                        <a href="{{ route('pacientes.antecedentes', ['id' => $paciente->idpacientes]) }}" class="btn btn-primary">Ver Antecedentes</a>
-                    </td> <!-- Agregar columna para el botón de ver antecedentes -->
                 </tr>
             @endforeach
         </tbody>
@@ -32,5 +28,9 @@
     <div class="d-flex justify-content-center">
         {{ $consultas->links() }}
     </div>
+
+    <!-- Botón de ver antecedentes -->
+    <div class="mt-4">
+        <a href="{{ route('pacientes.antecedentes', ['id' => $paciente->idpacientes]) }}" class="btn btn-primary">Ver Antecedentes</a>    </div>
 </div>
 @endsection

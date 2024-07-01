@@ -11,6 +11,8 @@ class App extends Model
 
     public $timestamps = false;
     protected $table = 'app';  // Asegurando que Laravel use el nombre correcto de la tabla.
+    protected $primaryKey = 'idapp'; // Ajustando la clave primaria.
+
 
     protected $fillable = [
         'fic_ident_idfi',

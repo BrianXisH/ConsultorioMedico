@@ -11,6 +11,8 @@ class ExploracionFisica extends Model
 
     public $timestamps = false;
     protected $table = 'exploracion_fisica';  // Asegurando que Laravel use el nombre correcto de la tabla.
+    protected $primaryKey = 'idexploracion_fisica'; // Ajustando la clave primaria.
+
 
     protected $fillable = [
         'fic_ident_idfi',

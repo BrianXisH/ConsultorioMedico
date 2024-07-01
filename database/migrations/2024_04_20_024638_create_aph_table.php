@@ -23,7 +23,7 @@ class CreateAphTable extends Migration
             $table->string('esposo_a', 255)->nullable();
             $table->string('tios', 255)->nullable();
             $table->string('abuelos', 255)->nullable();
-            $table->timestamps();
+            
 
             // Definición correcta de la clave foránea
             $table->foreign('fic_ident_idfi')

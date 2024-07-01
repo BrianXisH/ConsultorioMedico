@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container" style="max-width: 800px;">
-    <h1>Ficha de identificación</h1>
+    <h1>Consulta Medica</h1>
     <form method="POST" action="{{ route('submitForm') }}" class="form-container">
         @csrf
         <div class="form-group">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Guardar ficha" class="btn btn-primary">
+            <input type="submit" value="Guardar" class="btn btn-primary">
             <a href="{{ route('pathological.index') }}" class="btn btn-orange">Siguiente</a>
         </div>
 

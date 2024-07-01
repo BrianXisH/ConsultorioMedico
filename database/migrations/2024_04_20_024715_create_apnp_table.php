@@ -38,6 +38,7 @@ class CreateApnpTable extends Migration
             $table->dateTime('hospitalizado_fecha')->nullable();
             $table->string('hospitalizado_motivo', 255)->nullable();
             $table->string('padecimiento_actual', 255)->nullable();
+            
 
 
             $table->foreign('fic_ident_idfi')

@@ -35,10 +35,12 @@ class CreateExploracionFisicaTable extends Migration
             $table->boolean('musculos_espasticos')->nullable();
             $table->boolean('cuello_palpa_cadena_ganglionar')->nullable();
             $table->string('otros', 255)->nullable();
+            
             $table->foreign('fic_ident_idfi')
                   ->references('idfi')
                   ->on('fic_ident')
                   ->onDelete('set null');
+            
         });
     }
 

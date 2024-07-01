@@ -11,6 +11,7 @@ class Apnp extends Model
     public $timestamps = false;
 
     protected $table = 'apnp';  // Asegurando que Laravel use el nombre correcto de la tabla.
+    protected $primaryKey = 'idapnp'; // Ajustando la clave primaria.
 
     protected $fillable = [
         'fic_ident_idfi',

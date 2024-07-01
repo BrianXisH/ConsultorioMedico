@@ -17,6 +17,7 @@ class CreateAppTable extends Migration
             $table->string('enfermedades_neoplasicas', 255)->nullable();
             $table->string('enfermedades_congenitas', 255)->nullable();
             $table->string('otras', 255)->nullable();
+            
 
             // Definición correcta de la clave foránea
             $table->foreign('fic_ident_idfi')
