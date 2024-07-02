@@ -40,8 +40,9 @@ class IdentificacionEController extends Controller
         if (!$pacienteId) {
             return back()->withErrors('No se ha seleccionado ningún paciente.');
         }
-        $errorLog = "ID del paciente guardado en la sesión: " . $pacienteId;
-        error_log($errorLog);
+        
+        // Agregar log para verificar el pacienteId
+        error_log("ID del paciente guardado en la sesión: " . $pacienteId);
 
         DB::beginTransaction();
         try {
@@ -56,13 +57,18 @@ class IdentificacionEController extends Controller
 
             DB::commit();
 
-            toastr()->success('Ficha de identificación guardada con éxito.');
-            toastr()->forget('success');
-            return redirect()->route('identification.index');
-        } catch (\Exception $e) {
+            // Almacenar el ID de la ficha en la sesión para uso futuro
+            session(['selectedFichaId' => $ficha->idfi]);
 
+            // Agregar log para verificar el ID de la ficha guardada
+            error_log("ID de la ficha guardada: " . $ficha->idfi);
+
+            toastr()->success('Ficha de identificación guardada con éxito.');
+            return redirect()->route('pathological.index'); // Asegúrate de que esta ruta esté definida
+        } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors('Error al guardar la ficha de identificación: ' . $e->getMessage());
         }
     }
 }
+

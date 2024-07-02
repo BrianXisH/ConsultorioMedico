@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -37,9 +36,7 @@ class CreatePacientesTable extends Migration
             $table->string('domicilio_delegacion', 45)->nullable();
             $table->string('telefono', 45)->nullable();
             $table->string('telefono_oficina', 45)->nullable();
-
-            
-           
+            $table->string('tipo_consulta', 45)->nullable(); // Añadir esta línea
         });
     }
 

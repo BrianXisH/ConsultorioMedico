@@ -28,9 +28,6 @@
             @enderror
         </div>
         <div class="form-group">
-
-            
-
             <label>Tipo de consulta</label>
             <select name="tipo_consulta" class="form-control @error('tipo_consulta') is-invalid @enderror">
                 <option value="">Seleccione</option>
@@ -49,8 +46,6 @@
             <input type="submit" value="Guardar" class="btn btn-primary">
             <a href="{{ route('pathological.index') }}" class="btn btn-orange">Siguiente</a>
         </div>
-
-        
     </form>
 </div>
 

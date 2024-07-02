@@ -20,63 +20,69 @@ class NoPatologicoController extends Controller
         return view('components.AntecedentespersonalesNoPatologicos');
     }
     public function store(Request $request)
-    {
-        $ultimaFichaId = session('selectedPacienteId');
+{
+    $ultimaFichaId = session('selectedPacienteId');
 
-        $validatedData = $request->validate([
-            'habitos_higienicos_vestuario' => 'nullable|string|max:255',
-            'habitos_higienicos_lavado_dientes_frecuencia' => 'nullable|string|max:50',
-            'habitos_higienicos_utiliza_auxiliares_higiene_bucal' => 'nullable|boolean',
-            'habitos_higienicos_auxiliares_higiene_bucal_cuales' => 'nullable|string|max:255',
-            'habitos_higienicos_consume_golosinas_otros_alimentos_comidas' => 'nullable|boolean',
-            'grupo_sanguineo' => 'nullable|string|max:10',
-            'factor_rh' => 'nullable|string|max:10',
-            'cuenta_cartilla_vacunacion' => 'nullable|boolean',
-            'esquema_completo' => 'nullable|boolean',
-            'esquema_falta' => 'nullable|string|max:255',
-            'adicciones_tabaco' => 'nullable|boolean',
-            'adicciones_alcohol' => 'nullable|boolean',
-            'antecedentes_alergicos' => 'nullable|string|max:255',
-            'antecedentes_alergicos_antibioticos' => 'nullable|string|max:255',
-            'antecedentes_alergicos_analgesicos' => 'nullable|string|max:255',
-            'antecedentes_alergicos_anestesicos' => 'nullable|string|max:255',
-            'antecedentes_alergicos_alimentos' => 'nullable|string|max:255',
-            'antecedentes_alergicos_especifique' => 'nullable|string|max:255',
-            'hospitalizado' => 'nullable|boolean',
-            'hospitalizado_fecha' => 'nullable|date',
-            'hospitalizado_motivo' => 'nullable|string|max:255',
-            'padecimiento_actual' => 'nullable|string|max:255',
-        ]);
-
-        // Manejar los valores booleanos
-        $booleanFields = [
-            'habitos_higienicos_utiliza_auxiliares_higiene_bucal',
-            'habitos_higienicos_consume_golosinas_otros_alimentos_comidas',
-            'cuenta_cartilla_vacunacion',
-            'esquema_completo',
-            'adicciones_tabaco',
-            'adicciones_alcohol',
-            'hospitalizado'
-        ];
-
-        foreach ($booleanFields as $field) {
-            $validatedData[$field] = $request->has($field) ? 1 : 0;
-        }
-
-        DB::beginTransaction();
-        try {
-            $personalNoPatologico = new Apnp(array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]));
-            $personalNoPatologico->save();
-
-            DB::commit();
-            toastr()->success('Antecedentes personales no patológicos guardados con éxito');
-            return redirect()->route('nonPathological.index');
-        } catch (\Exception $e) {
-            DB::rollback();
-            toastr()->error('Error al guardar los antecedentes personales no patológicos: ' . $e->getMessage());
-            return redirect()->back();
-        }
+    if (!$ultimaFichaId) {
+        toastr()->error('No se ha seleccionado un paciente.');
+        return redirect()->back();
     }
+
+    $validatedData = $request->validate([
+        'habitos_higienicos_vestuario' => 'nullable|string|max:255',
+        'habitos_higienicos_lavado_dientes_frecuencia' => 'nullable|string|max:50',
+        'habitos_higienicos_utiliza_auxiliares_higiene_bucal' => 'nullable|boolean',
+        'habitos_higienicos_auxiliares_higiene_bucal_cuales' => 'nullable|string|max:255',
+        'habitos_higienicos_consume_golosinas_otros_alimentos_comidas' => 'nullable|boolean',
+        'grupo_sanguineo' => 'nullable|string|max:10',
+        'factor_rh' => 'nullable|string|max:10',
+        'cuenta_cartilla_vacunacion' => 'nullable|boolean',
+        'esquema_completo' => 'nullable|boolean',
+        'esquema_falta' => 'nullable|string|max:255',
+        'adicciones_tabaco' => 'nullable|boolean',
+        'adicciones_alcohol' => 'nullable|boolean',
+        'antecedentes_alergicos' => 'nullable|string|max:255',
+        'antecedentes_alergicos_antibioticos' => 'nullable|string|max:255',
+        'antecedentes_alergicos_analgesicos' => 'nullable|string|max:255',
+        'antecedentes_alergicos_anestesicos' => 'nullable|string|max:255',
+        'antecedentes_alergicos_alimentos' => 'nullable|string|max:255',
+        'antecedentes_alergicos_especifique' => 'nullable|string|max:255',
+        'hospitalizado' => 'nullable|boolean',
+        'hospitalizado_fecha' => 'nullable|date',
+        'hospitalizado_motivo' => 'nullable|string|max:255',
+        'padecimiento_actual' => 'nullable|string|max:255',
+    ]);
+
+    // Manejar los valores booleanos
+    $booleanFields = [
+        'habitos_higienicos_utiliza_auxiliares_higiene_bucal',
+        'habitos_higienicos_consume_golosinas_otros_alimentos_comidas',
+        'cuenta_cartilla_vacunacion',
+        'esquema_completo',
+        'adicciones_tabaco',
+        'adicciones_alcohol',
+        'hospitalizado'
+    ];
+
+    foreach ($booleanFields as $field) {
+        $validatedData[$field] = $request->has($field) ? 1 : 0;
+    }
+
+    DB::beginTransaction();
+    try {
+        $personalNoPatologico = new Apnp(array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]));
+        $personalNoPatologico->save();
+
+        DB::commit();
+        toastr()->success('Antecedentes personales no patológicos guardados con éxito');
+        return redirect()->route('nonPathological.create');
+    } catch (\Exception $e) {
+        DB::rollback();
+        toastr()->error('Error al guardar los antecedentes personales no patológicos: ' . $e->getMessage());
+        return redirect()->back();
+    }
+}
+
 
     public function edit($fic_ident_idfi)
     {

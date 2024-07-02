@@ -53,9 +53,9 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
 
     Route::get('/antecedentes_personales_no_patologicos', [NoPatologicoController::class, 'index'])->name('nonPathological.create');
     Route::post('/antecedentes_personales_no_patologicos', [NoPatologicoController::class, 'store'])->name('nonPathological.store');
-    //ver y editar personla patologico
     Route::get('/nonPathological/{fic_ident_idfi}/edit', [NoPatologicoController::class, 'edit'])->name('nonPathological.edit');
     Route::put('/nonPathological/{fic_ident_idfi}', [NoPatologicoController::class, 'update'])->name('nonPathological.update');
+    
 
     Route::get('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'index'])->name('pathological.index');
     Route::post('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'store'])->name('pathological.store');
