@@ -3,7 +3,7 @@
 @section('content')
 <div class="contact-form" style="margin: 0 auto; width: 800px;">
     <h3>Exploración de cabeza y cuello</h3>
-    <form method="POST" action="{{ $exploracion ? route('exploracion.update', $exploracion->fic_ident_idfi) : route('exploracion.store') }}">
+    <form method="POST" action="{{ $exploracion ? route('exploracion.update', $exploracion->ficha_nueva_id) : route('exploracion.store') }}">
         @csrf
         @if ($exploracion)
             @method('PUT')
@@ -66,8 +66,8 @@
             <label>Cuello:</label>
             <div>
                 <label>Se palpa la cadena ganglionar</label>
-                <label style="margin: 20px"><input type="radio" name="cuello_palpa_cadena_ganglionar" value="true" {{ $exploracion->cuello_palpa_cadena_ganglionar == 'true' ? 'checked' : '' }}> Sí</label>
-                <label style="margin: 20px"><input type="radio" name="cuello_palpa_cadena_ganglionar" value="false" {{ $exploracion->cuello_palpa_cadena_ganglionar == 'false' ? 'checked' : '' }}> No</label>
+                <label style="margin: 20px"><input type="radio" name="cuello_palpa_cadena_ganglionar" value="1" {{ $exploracion->cuello_palpa_cadena_ganglionar == '1' ? 'checked' : '' }}> Sí</label>
+                <label style="margin: 20px"><input type="radio" name="cuello_palpa_cadena_ganglionar" value="0" {{ $exploracion->cuello_palpa_cadena_ganglionar == '0' ? 'checked' : '' }}> No</label>
             </div>
         </div>
 

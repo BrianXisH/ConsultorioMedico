@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +14,7 @@ class CreateIpsaTable extends Migration
     {
         Schema::create('ipsa', function (Blueprint $table) {
             $table->increments('idipsa');
-            $table->unsignedInteger('fic_ident_idfi')->nullable();
+            $table->unsignedBigInteger('ficha_nueva_id')->nullable();
             $table->string('interrogatorio_aparato_digestivo', 255)->nullable();
             $table->string('interrogatorio_aparato_respiratorio', 255)->nullable();
             $table->string('interrogatorio_cardiovascular', 255)->nullable();
@@ -25,7 +24,6 @@ class CreateIpsaTable extends Migration
             $table->string('interrogatorio_sistema_nervioso', 255)->nullable();
             $table->string('interrogatorio_sistema_musculoesqueletico', 255)->nullable();
             $table->string('interrogatorio_sistema_tegumentario', 255)->nullable();
-            $table->string('interrogatorio_aparato_tegumentario', 255)->nullable();
             $table->string('habitus_exterior', 255)->nullable();
             $table->decimal('peso', 5, 2)->nullable();
             $table->decimal('talla', 5, 2)->nullable();
@@ -35,12 +33,11 @@ class CreateIpsaTable extends Migration
             $table->integer('diastolica')->nullable();
             $table->integer('frecuencia_respiratoria')->nullable();
             $table->decimal('temperatura', 4, 2)->nullable();
-            
-            $table->foreign('fic_ident_idfi')
-                  ->references('idfi')
-                  ->on('fic_ident')
+
+            $table->foreign('ficha_nueva_id')
+                  ->references('id')
+                  ->on('fichas_nuevas')
                   ->onDelete('set null');
-            
         });
     }
 

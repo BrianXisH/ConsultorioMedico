@@ -14,7 +14,7 @@ class Apnp extends Model
     protected $primaryKey = 'idapnp'; // Ajustando la clave primaria.
 
     protected $fillable = [
-        'fic_ident_idfi',
+        'ficha_nueva_id',
         'habitos_higienicos_vestuario',
         'habitos_higienicos_lavado_dientes_frecuencia',
         'habitos_higienicos_utiliza_auxiliares_higiene_bucal',
@@ -40,10 +40,10 @@ class Apnp extends Model
     ];
 
     /**
-     * Relación uno a uno con Paciente.
+     * Relación uno a uno con FichaNueva.
      */
-    public function ficIdent()
+    public function fichaNueva()
     {
-        return $this->belongsTo(FicIdent::class, 'fic_ident_idfi', 'idfi');
+        return $this->belongsTo(FichaNueva::class, 'ficha_nueva_id', 'id');
     }
 }

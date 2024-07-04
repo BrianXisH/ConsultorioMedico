@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\App;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Models\FicIdent;
+use App\Models\FichaNueva;
 use Illuminate\Support\Facades\DB;
 
 class PersonalPatologicoController extends Controller
@@ -35,13 +35,12 @@ class PersonalPatologicoController extends Controller
 
         DB::beginTransaction();
         try {
-            $personalPatologicoData = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
+            $personalPatologicoData = array_merge($validatedData, ['ficha_nueva_id' => $ultimaFichaId]);
             $personalPatologico = new App($personalPatologicoData);
             $personalPatologico->save();
 
             DB::commit();
             toastr()->success('Antecedentes personales patológicos guardados con éxito');
-            toastr()->forget('success');
             return redirect()->route('pathological.index');
         } catch (\Exception $e) {
             DB::rollback();
@@ -49,15 +48,15 @@ class PersonalPatologicoController extends Controller
         }
     }
 
-    public function edit($fic_ident_idfi)
+    public function edit($ficha_nueva_id)
     {
-        $ficha = FicIdent::findOrFail($fic_ident_idfi);
-        $paciente = Paciente::findOrFail($ficha->pacientes_idpacientes);
-        $app = App::where('fic_ident_idfi', $fic_ident_idfi)->first();
+        $ficha = FichaNueva::findOrFail($ficha_nueva_id);
+        $paciente = Paciente::findOrFail($ficha->paciente_id);
+        $app = App::where('ficha_nueva_id', $ficha_nueva_id)->first();
         return view('edit_antecedentes.app_edit', compact('paciente', 'app', 'ficha'));
     }
 
-    public function update(Request $request, $fic_ident_idfi)
+    public function update(Request $request, $ficha_nueva_id)
     {
         $validatedData = $request->validate([
             'enfermedades_inflamatorias_infecciosas_no_trasmisibles' => 'required|string|max:255',
@@ -70,18 +69,18 @@ class PersonalPatologicoController extends Controller
 
         DB::beginTransaction();
         try {
-            $app = App::where('fic_ident_idfi', $fic_ident_idfi)->first();
+            $app = App::where('ficha_nueva_id', $ficha_nueva_id)->first();
 
             if ($app) {
                 $app->update($validatedData);
             } else {
-                $validatedData['fic_ident_idfi'] = $fic_ident_idfi;
+                $validatedData['ficha_nueva_id'] = $ficha_nueva_id;
                 App::create($validatedData);
             }
 
             DB::commit();
             toastr()->success('Antecedentes personales patológicos actualizados con éxito');
-            return redirect()->route('pathological.edit', ['fic_ident_idfi' => $fic_ident_idfi]);
+            return redirect()->route('pathological.edit', ['ficha_nueva_id' => $ficha_nueva_id]);
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Error al actualizar los antecedentes personales patológicos: ' . $e->getMessage());

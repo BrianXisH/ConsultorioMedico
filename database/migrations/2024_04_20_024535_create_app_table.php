@@ -10,7 +10,7 @@ class CreateAppTable extends Migration
     {
         Schema::create('app', function (Blueprint $table) {
             $table->increments('idapp');
-            $table->unsignedInteger('fic_ident_idfi')->nullable();
+            $table->unsignedBigInteger('ficha_nueva_id')->nullable();
             $table->string('enfermedades_inflamatorias_infecciosas_no_trasmisibles', 255)->nullable();
             $table->string('enfermedades_trasmision_sexual', 255)->nullable();
             $table->string('enfermedades_degenerativas', 255)->nullable();
@@ -20,9 +20,9 @@ class CreateAppTable extends Migration
             
 
             // Definición correcta de la clave foránea
-            $table->foreign('fic_ident_idfi')
-                  ->references('idfi')
-                  ->on('fic_ident')
+            $table->foreign('ficha_nueva_id')
+                  ->references('id')
+                  ->on('fichas_nuevas')
                   ->onDelete('set null'); // Ajusta según tus necesidades
         });
     }

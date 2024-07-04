@@ -3,7 +3,7 @@
 @section('content')
 <div class="contact-form" style="margin: 0 auto; width: 800px;">
     <h3>Editar Antecedentes Personales No Patológicos</h3>
-    <form method="POST" action="{{ route('nonPathological.update', ['fic_ident_idfi' => $apnp->fic_ident_idfi]) }}">
+    <form method="POST" action="{{ route('nonPathological.update', ['ficha_nueva_id' => $apnp->ficha_nueva_id]) }}">
         @csrf
         @method('PUT')
         <div class="form-group">

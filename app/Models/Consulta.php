@@ -16,7 +16,7 @@ class Consulta extends Model
         'diagnostico',
         'user_id',  // Asegúrate de que este campo esté en la tabla
         'enfermedades_idenfermedades',
-        'fic_ident_idfi'
+        'ficha_nueva_id' // Cambiado para apuntar a la nueva ficha
     ];
 
     /**
@@ -36,10 +36,10 @@ class Consulta extends Model
     }
 
     /**
-     * Relación con FicIdent.
+     * Relación con FichaNueva.
      */
-    public function ficIdent()
+    public function fichaNueva()
     {
-        return $this->belongsTo('App\Models\FicIdent', 'fic_ident_idfi', 'idfi');
+        return $this->belongsTo('App\Models\FichaNueva', 'ficha_nueva_id', 'id'); // Cambiado para apuntar a la nueva ficha
     }
 }

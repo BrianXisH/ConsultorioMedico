@@ -28,7 +28,7 @@
                     <td>{{ $paciente->telefono }}</td>
                     <td>{{ $paciente->curp }}</td>
                     <td>
-                        <a href="{{ route('pacientes.show', $paciente->idpacientes) }}" style="text-decoration: none; padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Seleccionar</a>
+                        <a href="{{ route('consultas.seleccionar', $paciente->idpacientes) }}" style="text-decoration: none; padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Seleccionar</a>
                     </td>
                 </tr>
             @endforeach

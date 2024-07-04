@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ExploracionFisica;
-use App\Models\FicIdent;
-use App\Models\Paciente;
+use App\Models\FichaNueva;
 use Illuminate\Support\Facades\DB;
 
 class ExploracionFisicaController extends Controller
@@ -17,7 +16,10 @@ class ExploracionFisicaController extends Controller
 
     public function index()
     {
-        return view('components.ExploracionFisica');
+        $ultimaFichaId = session('selectedPacienteId');
+        $exploracion = ExploracionFisica::where('ficha_nueva_id', $ultimaFichaId)->first();
+
+        return view('components.ExploracionFisica', compact('exploracion'));
     }
 
     public function store(Request $request)
@@ -25,9 +27,7 @@ class ExploracionFisicaController extends Controller
         $ultimaFichaId = session('selectedPacienteId');
 
         $validatedData = $request->validate([
-            // Tus otros campos de validación
             'otros' => 'nullable|string|max:255',
-            // Añade aquí las validaciones de otros campos si es necesario
         ]);
 
         $booleanFields = [
@@ -44,7 +44,7 @@ class ExploracionFisicaController extends Controller
 
         DB::beginTransaction();
         try {
-            $exploracionFisicaData = array_merge($validatedData, ['fic_ident_idfi' => $ultimaFichaId]);
+            $exploracionFisicaData = array_merge($validatedData, ['ficha_nueva_id' => $ultimaFichaId]);
             $exploracionFisica = new ExploracionFisica($exploracionFisicaData);
             $exploracionFisica->save();
 
@@ -58,19 +58,18 @@ class ExploracionFisicaController extends Controller
         }
     }
 
-    public function edit($fic_ident_idfi)
+    public function edit($ficha_nueva_id)
     {
-        $ficha = FicIdent::findOrFail($fic_ident_idfi);
-        $paciente = Paciente::findOrFail($ficha->pacientes_idpacientes);
-        $exploracion = ExploracionFisica::where('fic_ident_idfi', $fic_ident_idfi)->first();
-        return view('edit_antecedentes.exploracion_edit', compact('paciente', 'exploracion', 'ficha'));
+        $ficha = FichaNueva::findOrFail($ficha_nueva_id);
+        $exploracion = ExploracionFisica::where('ficha_nueva_id', $ficha_nueva_id)->first();
+
+        return view('edit_antecedentes.exploracion_edit', compact('exploracion', 'ficha'));
     }
 
-    public function update(Request $request, $fic_ident_idfi)
+    public function update(Request $request, $ficha_nueva_id)
     {
         $validatedData = $request->validate([
             'otros' => 'nullable|string|max:255',
-            // Añade aquí las validaciones de otros campos si es necesario
         ]);
 
         $booleanFields = [
@@ -87,18 +86,18 @@ class ExploracionFisicaController extends Controller
 
         DB::beginTransaction();
         try {
-            $exploracion = ExploracionFisica::where('fic_ident_idfi', $fic_ident_idfi)->first();
+            $exploracion = ExploracionFisica::where('ficha_nueva_id', $ficha_nueva_id)->first();
 
             if ($exploracion) {
                 $exploracion->update($validatedData);
             } else {
-                $validatedData['fic_ident_idfi'] = $fic_ident_idfi;
+                $validatedData['ficha_nueva_id'] = $ficha_nueva_id;
                 ExploracionFisica::create($validatedData);
             }
 
             DB::commit();
             toastr()->success('Exploración física actualizada con éxito');
-            return redirect()->route('exploracion.edit', ['fic_ident_idfi' => $fic_ident_idfi]);
+            return redirect()->route('exploracion.edit', ['ficha_nueva_id' => $ficha_nueva_id]);
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Error al actualizar la exploración física: ' . $e->getMessage());

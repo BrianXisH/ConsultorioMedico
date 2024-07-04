@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,13 +8,12 @@ class Aph extends Model
 {
     use HasFactory;
 
-
     public $timestamps = false;
     protected $table = 'aph';  // Asegurando que Laravel use el nombre correcto de la tabla.
     protected $primaryKey = 'idaph'; // Ajustando la clave primaria.
 
     protected $fillable = [
-        'fic_ident_idfi',
+        'ficha_nueva_id',
         'madre',
         'padre',
         'hermanos',
@@ -26,10 +24,10 @@ class Aph extends Model
     ];
 
     /**
-     * Relación uno a uno con Paciente.
+     * Relación uno a uno con FichaNueva.
      */
-    public function ficIdent()
+    public function fichaNueva()
     {
-        return $this->belongsTo(FicIdent::class, 'fic_ident_idfi', 'idfi');
+        return $this->belongsTo(FichaNueva::class, 'ficha_nueva_id', 'id');
     }
 }

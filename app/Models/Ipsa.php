@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +12,8 @@ class Ipsa extends Model
     protected $table = 'ipsa';  // Asegurando que Laravel use el nombre correcto de la tabla.
     protected $primaryKey = 'idipsa'; // Ajustando la clave primaria.
 
-
     protected $fillable = [
-        'fic_ident_idfi',
+        'ficha_nueva_id',
         'interrogatorio_aparato_digestivo',
         'interrogatorio_aparato_respiratorio',
         'interrogatorio_cardiovascular',
@@ -25,7 +23,6 @@ class Ipsa extends Model
         'interrogatorio_sistema_nervioso',
         'interrogatorio_sistema_musculoesqueletico',
         'interrogatorio_sistema_tegumentario',
-        'interrogatorio_aparato_tegumentario',
         'habitus_exterior',
         'peso',
         'talla',
@@ -37,11 +34,8 @@ class Ipsa extends Model
         'temperatura'
     ];
 
-    /**
-     * Relación uno a uno con Paciente.
-     */
-    public function ficIdent()
+    public function fichaNueva()
     {
-        return $this->belongsTo(FicIdent::class, 'fic_ident_idfi', 'idfi');
+        return $this->belongsTo(FichaNueva::class, 'ficha_nueva_id', 'id');
     }
 }

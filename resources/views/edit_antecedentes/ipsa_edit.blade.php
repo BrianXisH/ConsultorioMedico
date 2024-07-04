@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h3>Interrogatorio por aparatos y sistemas</h3>
-    <form method="POST" action="{{ $ipsa ? route('interrogatorio.update', $ipsa->fic_ident_idfi) : route('interrogatorio.store') }}" style="margin: 0 auto; width: 800px;">
+    <form method="POST" action="{{ $ipsa ? route('interrogatorio.update', $ipsa->ficha_nueva_id) : route('interrogatorio.store') }}" style="margin: 0 auto; width: 800px;">
         @csrf
         @if ($ipsa)
             @method('PUT')

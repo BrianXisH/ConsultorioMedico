@@ -1,21 +1,15 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateApnpTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('apnp', function (Blueprint $table) {
             $table->increments('idapnp');
-            $table->unsignedInteger('fic_ident_idfi')->nullable();
+            $table->unsignedBigInteger('ficha_nueva_id')->nullable();
             $table->string('habitos_higienicos_vestuario', 255)->nullable();
             $table->string('habitos_higienicos_lavado_dientes_frecuencia', 50)->nullable();
             $table->boolean('habitos_higienicos_utiliza_auxiliares_higiene_bucal')->nullable();
@@ -38,21 +32,11 @@ class CreateApnpTable extends Migration
             $table->dateTime('hospitalizado_fecha')->nullable();
             $table->string('hospitalizado_motivo', 255)->nullable();
             $table->string('padecimiento_actual', 255)->nullable();
-            
 
-
-            $table->foreign('fic_ident_idfi')
-                  ->references('idfi')
-                  ->on('fic_ident')
-                  ->onDelete('set null');
+            $table->foreign('ficha_nueva_id')->references('id')->on('fichas_nuevas')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('apnp');

@@ -5,7 +5,7 @@
     <h3>Antecedentes patológicos hereditarios</h3>
     <h4>Padecimientos de familiares en línea directa</h4>
 
-    <form method="POST" action="{{ $aph ? route('familyHistory.update', $aph->fic_ident_idfi) : route('familyHistory.store') }}">
+    <form method="POST" action="{{ $aph ? route('familyHistory.update', $aph->ficha_nueva_id) : route('familyHistory.store') }}">
         @csrf
         @if ($aph)
             @method('PUT')

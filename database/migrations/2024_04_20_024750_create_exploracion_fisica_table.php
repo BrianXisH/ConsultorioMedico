@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +13,8 @@ class CreateExploracionFisicaTable extends Migration
     public function up()
     {
         Schema::create('exploracion_fisica', function (Blueprint $table) {
-            $table->increments('idexploracion_fisica')->primary();
-            $table->unsignedInteger('fic_ident_idfi')->nullable();
+            $table->increments('idexploracion_fisica');
+            $table->unsignedBigInteger('ficha_nueva_id')->nullable();
             $table->boolean('cabeza_exostosis')->nullable();
             $table->boolean('cabeza_endostosis')->nullable();
             $table->boolean('craneo_dolicocefalico')->nullable();
@@ -36,9 +35,9 @@ class CreateExploracionFisicaTable extends Migration
             $table->boolean('cuello_palpa_cadena_ganglionar')->nullable();
             $table->string('otros', 255)->nullable();
             
-            $table->foreign('fic_ident_idfi')
-                  ->references('idfi')
-                  ->on('fic_ident')
+            $table->foreign('ficha_nueva_id')
+                  ->references('id')
+                  ->on('fichas_nuevas')
                   ->onDelete('set null');
             
         });

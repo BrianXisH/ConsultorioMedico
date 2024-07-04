@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\User;
-use App\Models\FicIdent;
+use App\Models\FichaNueva;
 use Illuminate\Http\Request;
 
 class PdfController extends Controller
@@ -22,11 +22,11 @@ class PdfController extends Controller
         // Devuelve la vista con los datos necesarios
         $paciente = session('selectedPacienteId');
 
-        $ultimaFichaId = FicIdent::where('pacientes_idpacientes', $paciente )
-                          ->latest('idfi')
+        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
+                          ->latest('id')
                           ->first()
-                          ->idfi;
-        // Asegúrate de que 'idfi' sea la columna de la clave primaria en la tabla fic_ident
+                          ->id;
+        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
 
         // Ahora puedes almacenar este ID en la sesión si así lo deseas
         session(['ultimaFichaId' => $ultimaFichaId]);
@@ -51,11 +51,11 @@ class PdfController extends Controller
         // Devuelve la vista con los datos necesarios
         $paciente = session('selectedPacienteId');
 
-        $ultimaFichaId = FicIdent::where('pacientes_idpacientes', $paciente )
-                          ->latest('idfi')
+        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
+                          ->latest('id')
                           ->first()
-                          ->idfi;
-        // Asegúrate de que 'idfi' sea la columna de la clave primaria en la tabla fic_ident
+                          ->id;
+        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
 
         // Ahora puedes almacenar este ID en la sesión si así lo deseas
         session(['ultimaFichaId' => $ultimaFichaId]);

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,7 @@ class App extends Model
 
 
     protected $fillable = [
-        'fic_ident_idfi',
+        'ficha_nueva_id', // Cambia este nombre a algo más adecuado si es necesario
         'enfermedades_inflamatorias_infecciosas_no_trasmisibles',
         'enfermedades_trasmision_sexual',
         'enfermedades_degenerativas',
@@ -25,10 +24,10 @@ class App extends Model
     ];
 
     /**
-     * Relación uno a uno con Paciente.
+     * Relación uno a uno con FichaNueva.
      */
-    public function ficIdent()
+    public function fichaNueva()
     {
-        return $this->belongsTo(FicIdent::class, 'fic_ident_idfi', 'idfi');
+        return $this->belongsTo(FichaNueva::class, 'ficha_nueva_id', 'id');
     }
 }

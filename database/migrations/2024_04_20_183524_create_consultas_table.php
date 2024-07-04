@@ -8,26 +8,17 @@ class CreateConsultasTable extends Migration
     public function up()
     {
         Schema::create('consultas', function (Blueprint $table) {
-            $table->increments('idconsultas'); // Cambiado a increments para autoincrement
-            $table->string('receta', 255);
-            $table->string('diagnostico', 255);
-            $table->foreignId('user_id')->constrained()->onDelete('no action')->onUpdate('no action'); 
-            $table->integer('enfermedades_idenfermedades'); // int, alineado con la tabla `enfermedades`
-            $table->unsignedInteger('fic_ident_idfi')->nullable();
-            $table->foreign('fic_ident_idfi')
-                  ->references('idfi')
-                  ->on('fic_ident')
-                  ->onDelete('set null');
+            $table->increments('idconsultas');
+            $table->text('receta')->nullable();
+            $table->text('diagnostico')->nullable();
+            $table->unsignedBigInteger('user_id'); // Debe ser 'unsignedBigInteger'
+            $table->unsignedInteger('enfermedades_idenfermedades'); // Debe ser 'unsignedInteger'
+            $table->unsignedBigInteger('ficha_nueva_id'); // Debe ser 'unsignedBigInteger'
+            $table->timestamps();
 
-            // Indices adicionales
-            $table->index('enfermedades_idenfermedades', 'fk_consultas_enfermedades1_idx');
-            // Claves foráneas
-            $table->foreign('enfermedades_idenfermedades', 'fk_consultas_enfermedades1')
-                  ->references('idenfermedades')->on('enfermedades')
-                  ->onDelete('no action')
-                  ->onUpdate('no action');
-            
-            $table->timestamps(); // Para tener created_at y updated_at
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('enfermedades_idenfermedades')->references('idenfermedades')->on('enfermedades')->onDelete('cascade');
+            $table->foreign('ficha_nueva_id')->references('id')->on('fichas_nuevas')->onDelete('cascade');
         });
     }
 

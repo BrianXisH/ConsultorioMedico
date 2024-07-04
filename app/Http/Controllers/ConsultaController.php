@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Paciente;
 
 class ConsultaController extends Controller
 {
@@ -24,6 +25,7 @@ class ConsultaController extends Controller
 
         return redirect()->route('pacientes.index'); // Retorna la vista donde se crea una nueva consulta.
     }
+
     public function registrar()
     {
         // Aquí deberías incluir la lógica para inicializar una nueva consulta.
@@ -45,6 +47,22 @@ class ConsultaController extends Controller
         return redirect()->route('pacientes.buscarConFicha'); // Retorna la vista donde se gestionan las consultas existentes.
     }
 
+    public function seleccionarPaciente($id)
+{
+    $paciente = Paciente::find($id);
+
+    if (!$paciente) {
+        return redirect()->back()->with('error', 'Paciente no encontrado');
+    }
+
+    // Guardar el ID del paciente en la sesión
+    session(['selectedPacienteId' => $id]);
+
+    // Redirigir al formulario de nueva ficha de identificación
+    return redirect()->route('fichas_nuevas.create');
+}
+
+
     /**
      * Log the user out of the application.
      *
@@ -57,4 +75,3 @@ class ConsultaController extends Controller
         return redirect('/login'); // Redirige al usuario a la página de inicio de sesión tras cerrar sesión.
     }
 }
-
