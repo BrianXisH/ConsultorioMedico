@@ -17,6 +17,7 @@ class CreateFichasNuevasTable extends Migration
             $table->unsignedInteger('paciente_id'); // Cambia a unsignedInteger
             $table->date('fecha_consulta');
             $table->string('tipo_consulta', 50);
+            $table->string('motivo_consulta', 50);
             $table->timestamps();
 
             $table->foreign('paciente_id')->references('idpacientes')->on('pacientes')->onDelete('cascade');

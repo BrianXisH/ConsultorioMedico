@@ -26,6 +26,7 @@ class FichaNuevaController extends Controller
         $validatedData = $request->validate([
             'fecha_consulta' => 'required|date',
             'tipo_consulta' => 'required|string|max:255',
+            'motivo_consulta' => 'required|string|max:50',
         ]);
 
         $pacienteId = session('selectedPacienteId');
@@ -39,6 +40,7 @@ class FichaNuevaController extends Controller
                 'paciente_id' => $pacienteId,
                 'fecha_consulta' => $validatedData['fecha_consulta'],
                 'tipo_consulta' => $validatedData['tipo_consulta'],
+                'motivo_consulta' => $validatedData['motivo_consulta']
             ]);
             $fichaNueva->save();
 

@@ -15,6 +15,7 @@ class FichaNueva extends Model
         'paciente_id',
         'fecha_consulta',
         'tipo_consulta',
+        'motivo_consulta',
     ];
 
     public function paciente()

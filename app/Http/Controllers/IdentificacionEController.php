@@ -23,16 +23,13 @@ class IdentificacionEController extends Controller
         $request->validate([
             'tipo_consulta' => 'required',
             'fecha_consulta' => 'required|date',
-            'fecha_ultima_consulta' => 'required|date',
-            'motivo_ultima_consulta' => 'required|max:45',
+            'motivo_consulta' => 'required|max:45',
         ], [
             'tipo_consulta.required' => 'El tipo de consulta es obligatorio',
             'fecha_consulta.required' => 'La fecha de consulta es obligatoria.',
             'fecha_consulta.date' => 'La fecha de consulta no tiene un formato válido.',
-            'fecha_ultima_consulta.required' => 'La fecha de la última consulta es obligatoria.',
-            'fecha_ultima_consulta.date' => 'La fecha de la última consulta no tiene un formato válido.',
-            'motivo_ultima_consulta.required' => 'El motivo de la última consulta es obligatorio.',
-            'motivo_ultima_consulta.max' => 'El motivo de la última consulta no debe exceder los 45 caracteres.',
+            'motivo_consulta.required' => 'El motivo de la última consulta es obligatorio.',
+            'motivo_consulta.max' => 'El motivo de la última consulta no debe exceder los 45 caracteres.',
         ]);
 
         // Recuperar el id del paciente guardado en la sesión
@@ -49,8 +46,7 @@ class IdentificacionEController extends Controller
             $ficha = new FicIdent([
                 'pacientes_idpacientes' => $pacienteId,
                 'fecha_consulta' => $request->input('fecha_consulta'),
-                'fecha_ultima_consulta' => $request->input('fecha_ultima_consulta'),
-                'motivo_ultima_consulta' => $request->input('motivo_ultima_consulta'),
+                'motivo_consulta' => $request->input('motivo_consulta'),
                 'tipo_consulta' => $request->input('tipo_consulta'),
             ]);
             $ficha->save();

@@ -26,6 +26,13 @@
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
+        <div class="form-group">
+            <label>Motivo de la consulta médica</label>
+            <input type="text" name="motivo_consulta" class="form-control @error('motivo_consulta') is-invalid @enderror" value="{{ old('motivo_consulta') }}">
+            @error('motivo_consulta')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
 
         <div class="form-group">
             <input type="submit" value="Guardar" class="btn btn-primary">

@@ -17,9 +17,9 @@ class FicIdent extends Model
     protected $fillable = [
         'pacientes_idpacientes',
         'fecha_consulta',
-        'fecha_ultima_consulta',
-        'motivo_ultima_consulta',
+        'motivo_consulta',
         'tipo_consulta',
+        
     ];
 
     public function paciente()

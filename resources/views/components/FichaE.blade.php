@@ -12,18 +12,11 @@
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
-        <div class="form-group">
-            <label>Fecha de la última consulta médica</label>
-            <input type="date" name="fecha_ultima_consulta" class="form-control @error('fecha_ultima_consulta') is-invalid @enderror" value="{{ old('fecha_ultima_consulta') }}" id="fecha_ultima_consulta">
-            @error('fecha_ultima_consulta')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
         
         <div class="form-group">
-            <label>Motivo de la última consulta médica</label>
-            <input type="text" name="motivo_ultima_consulta" class="form-control @error('motivo_ultima_consulta') is-invalid @enderror" value="{{ old('motivo_ultima_consulta') }}">
-            @error('motivo_ultima_consulta')
+            <label>Motivo de la consulta médica</label>
+            <input type="text" name="motivo_consulta" class="form-control @error('motivo_consulta') is-invalid @enderror" value="{{ old('motivo_consulta') }}">
+            @error('motivo_consulta')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -44,7 +37,7 @@
 
         <div class="form-group">
             <input type="submit" value="Guardar" class="btn btn-primary">
-            <a href="{{ route('pathological.index') }}" class="btn btn-orange">Siguiente</a>
+            <a href="{{ route('receta.show') }}" class="btn btn-orange">Siguiente</a>
         </div>
     </form>
 </div>

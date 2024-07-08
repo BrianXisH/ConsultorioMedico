@@ -12,8 +12,7 @@ class CreateFicIdentTable extends Migration
             $table->increments('idfi');
             $table->unsignedInteger('pacientes_idpacientes')->nullable();
             $table->dateTime('fecha_consulta');
-            $table->dateTime('fecha_ultima_consulta');
-            $table->string('motivo_ultima_consulta', 45);
+            $table->string('motivo_consulta', 45);
             $table->string('tipo_consulta', 45)->nullable();
             $table->timestamps();
 

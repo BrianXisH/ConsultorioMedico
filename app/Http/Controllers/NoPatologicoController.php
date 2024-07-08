@@ -93,6 +93,7 @@ class NoPatologicoController extends Controller
         $ficha = FichaNueva::findOrFail($ficha_nueva_id);
         $apnp = Apnp::where('ficha_nueva_id', $ficha_nueva_id)->first();
         return view('edit_antecedentes.apnp_edit', compact('apnp', 'ficha'));
+        
     }
 
     public function update(Request $request, $ficha_nueva_id)

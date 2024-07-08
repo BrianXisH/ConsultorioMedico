@@ -64,8 +64,8 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
     Route::post('/antecedentes_personales_patologicos', [PersonalPatologicoController::class, 'store'])->name('pathological.store');
     //ver y editar app
     
-    Route::get('/pathological/{fic_ident_idfi}/edit', [PersonalPatologicoController::class, 'edit'])->name('pathological.edit');
-    Route::put('/pathological/{fic_ident_idfi}', [PersonalPatologicoController::class, 'update'])->name('pathological.update');
+    Route::get('/pathological/{ficha_nueva_id}/edit', [PersonalPatologicoController::class, 'edit'])->name('pathological.edit');
+    Route::put('/pathological/{ficha_nueva_id}', [PersonalPatologicoController::class, 'update'])->name('pathological.update');
 
     Route::get('/pacientes/buscarConFicha', [BusquedaPacienteController::class, 'buscarPacientesConFicha'])->name('pacientes.buscarConFicha');
 

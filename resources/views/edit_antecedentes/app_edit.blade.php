@@ -3,7 +3,8 @@
 @section('content')
 <div class="contact-form" style="margin: 0 auto; width: 800px;">
     <h3>Antecedentes personales patológicos</h3>
-    <form method="POST" action="{{ $app ? route('pathological.update', $app->fic_ident_idfi) : route('pathological.store') }}">
+    
+    <form method="POST" action="{{ $app ? route('pathological.update', $app->ficha_nueva_id) : route('pathological.store') }}">
         @csrf
         @if ($app)
             @method('PUT')

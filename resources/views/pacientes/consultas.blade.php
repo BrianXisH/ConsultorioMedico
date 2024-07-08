@@ -8,17 +8,15 @@
         <thead>
             <tr>
                 <th>Fecha de Consulta</th>
-                <th>Fecha Última Consulta</th>
-                <th>Motivo Última Consulta</th>
+                <th>Motivo de Consulta</th>
                 <th>Tipo de Consulta</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($consultas as $consulta)
+            @foreach ($paginatedConsultas as $consulta)
                 <tr>
                     <td>{{ $consulta->fecha_consulta }}</td>
-                    <td>{{ $consulta->fecha_ultima_consulta }}</td>
-                    <td>{{ $consulta->motivo_ultima_consulta }}</td>
+                    <td>{{ $consulta->motivo_consulta }}</td>
                     <td>{{ $consulta->tipo_consulta }}</td>
                 </tr>
             @endforeach
@@ -26,11 +24,12 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{ $consultas->links() }}
+        {{ $paginatedConsultas->links() }}
     </div>
 
     <!-- Botón de ver antecedentes -->
     <div class="mt-4">
-        <a href="{{ route('pacientes.antecedentes', ['id' => $paciente->idpacientes]) }}" class="btn btn-primary">Ver Antecedentes</a>    </div>
+        <a href="{{ route('pacientes.antecedentes', ['id' => $paciente->idpacientes]) }}" class="btn btn-primary">Ver Antecedentes</a>
+    </div>
 </div>
 @endsection
