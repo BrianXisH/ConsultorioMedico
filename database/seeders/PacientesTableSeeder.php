@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
+use Faker\Factory as Faker;
 
 class PacientesTableSeeder extends Seeder
 {
@@ -16,31 +16,34 @@ class PacientesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('pacientes')->insert([
+        $faker = Faker::create();
 
-            'tipo_consulta' => Str::random(10),
-            'curp' => Str::random(10),
-            'nombre_apellido_paterno' => Str::random(10),
-            'nombre_apellido_materno' => Str::random(10),
-            'nombre_nombres' => Str::random(10),
-            'edad_anios' => rand(1, 100),
-            'genero_masculino' => rand(0, 1) == 1,
-            'genero_femenino' => rand(0, 1) == 1,
-            'lugar_nacimiento_estado' => Str::random(10),
-            'lugar_nacimiento_ciudad' => Str::random(10),
-            'fecha_nacimiento' => now()->subYears(rand(1, 100)),
-            'ocupacion' => Str::random(10),
-            'escolaridad' => Str::random(10),
-            'estado_civil' => Str::random(10),
-            'domicilio_calle' => Str::random(10),
-            'domicilio_num_exterior' => rand(1, 1000),
-            'domicilio_num_interior' => rand(1, 100),
-            'domicilio_colonia' => Str::random(10),
-            'domicilio_estado' => Str::random(10),
-            'domicilio_mpio' => Str::random(10),
-            'domicilio_delegacion' => Str::random(10),
-            'telefono' => Str::random(10),
-            'telefono_oficina' => Str::random(10),
-        ]);
+        foreach(range(1, 50) as $index) {
+            DB::table('pacientes')->insert([
+                'curp' => strtoupper($faker->bothify('????######????????')),
+                'nombre_apellido_paterno' => $faker->lastName,
+                'nombre_apellido_materno' => $faker->lastName,
+                'nombre_nombres' => $faker->firstName,
+                'edad_anios' => $faker->numberBetween(1, 100),
+                'genero_masculino' => $faker->boolean,
+                'genero_femenino' => $faker->boolean,
+                'lugar_nacimiento_estado' => $faker->state,
+                'lugar_nacimiento_ciudad' => $faker->city,
+                'fecha_nacimiento' => $faker->dateTimeBetween('-100 years', '-1 year'),
+                'ocupacion' => $faker->jobTitle,
+                'escolaridad' => $faker->randomElement(['Primaria', 'Secundaria', 'Preparatoria', 'Universidad', 'Posgrado']),
+                'estado_civil' => $faker->randomElement(['Soltero', 'Casado', 'Divorciado', 'Viudo']),
+                'domicilio_calle' => $faker->streetName,
+                'domicilio_num_exterior' => $faker->buildingNumber,
+                'domicilio_num_interior' => $faker->randomNumber(3, false),
+                'domicilio_colonia' => $faker->secondaryAddress,
+                'domicilio_estado' => $faker->state,
+                'domicilio_mpio' => $faker->city,
+                'domicilio_delegacion' => $faker->citySuffix,
+                'telefono' => $faker->phoneNumber,
+                'telefono_oficina' => $faker->phoneNumber,
+                'tipo_usuario' => $faker->randomElement(['Paciente', 'Consulta Externa', 'Urgencias']),
+            ]);
+        }
     }
 }
