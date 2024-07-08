@@ -82,8 +82,6 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
 
     Route::get('/interrogatorio', [InterrogatorioController::class, 'index'])->name('interrogatorio.index');
     Route::post('/interrogatorio', [InterrogatorioController::class, 'store'])->name('interrogatorio.store');
-    Route::post('/habitus', [HabitusController::class, 'store'])->name('habitus.store');
-    //ver y editar interrogatorio
     Route::get('/interrogatorio/{ficha_nueva_id}/edit', [InterrogatorioController::class, 'edit'])->name('interrogatorio.edit');
     Route::put('/interrogatorio/{ficha_nueva_id}', [InterrogatorioController::class, 'update'])->name('interrogatorio.update');
 
