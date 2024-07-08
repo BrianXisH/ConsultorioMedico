@@ -5,11 +5,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePacientesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('pacientes', function (Blueprint $table) {
@@ -36,15 +31,10 @@ class CreatePacientesTable extends Migration
             $table->string('domicilio_delegacion', 45)->nullable();
             $table->string('telefono', 45)->nullable();
             $table->string('telefono_oficina', 45)->nullable();
-            $table->string('tipo_consulta', 45)->nullable(); // Añadir esta línea
+            $table->string('tipo_usuario', 45); // Añadir esta línea
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('pacientes');

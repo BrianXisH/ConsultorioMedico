@@ -35,10 +35,10 @@ class Paciente extends Model
         'domicilio_mpio',
         'domicilio_delegacion',
         'telefono',
-        'telefono_oficina'
+        'telefono_oficina',
+        'tipo_usuario'  // Añadir esta línea
     ];
 
-    
     public function fichasIdentificacion()
     {
         return $this->hasMany(FicIdent::class, 'pacientes_idpacientes', 'idpacientes');
@@ -48,6 +48,4 @@ class Paciente extends Model
     {
         return $this->hasMany(Cita::class, 'paciente_id', 'idpacientes');
     }
-
-    
 }

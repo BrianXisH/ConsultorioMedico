@@ -30,6 +30,20 @@
         </div>
 
         <div class="form-group">
+            <label for="tipo_usuario">Tipo de Usuario</label>
+            <select name="tipo_usuario" id="tipo_usuario" class="form-control @error('tipo_usuario') is-invalid @enderror">
+                <option value="">Seleccione</option>
+                <option value="alumno" {{ old('tipo_usuario') == 'alumno' ? 'selected' : '' }}>Alumno</option>
+                <option value="profesor" {{ old('tipo_usuario') == 'profesor' ? 'selected' : '' }}>Profesor</option>
+                <option value="administrativo" {{ old('tipo_usuario') == 'administrativo' ? 'selected' : '' }}>Administrativo</option>
+                <option value="visitante" {{ old('tipo_usuario') == 'visitante' ? 'selected' : '' }}>Visitante</option>
+            </select>
+            @error('tipo_usuario')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <div class="form-group">
             <label>Nombre</label>
             <div class="input-group">
                 <input type="text" name="nombre_apellido_paterno" placeholder="Apellido paterno" class="form-control @error('nombre_apellido_paterno') is-invalid @enderror" value="{{ old('nombre_apellido_paterno') }}">
