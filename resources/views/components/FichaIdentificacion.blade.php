@@ -112,14 +112,14 @@
 
         <div class="form-group">
             <label>Tipo de Paciente</label>
-            <select name="tipo_paciente" class="form-control @error('tipo_paciente') is-invalid @enderror">
+            <select name="tipo_usuario" class="form-control @error('tipo_usuario') is-invalid @enderror">
                 <option value="">Seleccione</option>
-                <option value="Alumno" {{ old('tipo_paciente') == 'Alumno' ? 'selected' : '' }}>Alumno</option>
-                <option value="Profesor" {{ old('tipo_paciente') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
-                <option value="Administrativo" {{ old('tipo_paciente') == 'Administrativo' ? 'selected' : '' }}>Administrativo</option>
-                <option value="Visitante" {{ old('tipo_paciente') == 'Visitante' ? 'selected' : '' }}>Visitante</option>
+                <option value="Alumno" {{ old('tipo_usuario') == 'Alumno' ? 'selected' : '' }}>Alumno</option>
+                <option value="Profesor" {{ old('tipo_usuario') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
+                <option value="Administrativo" {{ old('tipo_usuario') == 'Administrativo' ? 'selected' : '' }}>Administrativo</option>
+                <option value="Visitante" {{ old('tipo_usuario') == 'Visitante' ? 'selected' : '' }}>Visitante</option>
             </select>
-            @error('tipo_paciente')
+            @error('tipo_usuario')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
