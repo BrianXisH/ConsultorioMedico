@@ -14,10 +14,6 @@
     <form method="POST" action="{{ route('ficha.store') }}" class="form-container">
         @csrf
 
-        
-
-
-        
         <div class="form-group">
             <label>CURP</label>
             <div class="input-group">
@@ -25,22 +21,7 @@
                 @error('curp')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
-            
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="tipo_usuario">Tipo de Usuario</label>
-            <select name="tipo_usuario" id="tipo_usuario" class="form-control @error('tipo_usuario') is-invalid @enderror">
-                <option value="">Seleccione</option>
-                <option value="alumno" {{ old('tipo_usuario') == 'alumno' ? 'selected' : '' }}>Alumno</option>
-                <option value="profesor" {{ old('tipo_usuario') == 'profesor' ? 'selected' : '' }}>Profesor</option>
-                <option value="administrativo" {{ old('tipo_usuario') == 'administrativo' ? 'selected' : '' }}>Administrativo</option>
-                <option value="visitante" {{ old('tipo_usuario') == 'visitante' ? 'selected' : '' }}>Visitante</option>
-            </select>
-            @error('tipo_usuario')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
         </div>
 
         <div class="form-group">
@@ -125,6 +106,20 @@
             <label>Ocupación</label>
             <input type="text" name="ocupacion" class="form-control @error('ocupacion') is-invalid @enderror" value="{{ old('ocupacion') }}">
             @error('ocupacion')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label>Tipo de Paciente</label>
+            <select name="tipo_paciente" class="form-control @error('tipo_paciente') is-invalid @enderror">
+                <option value="">Seleccione</option>
+                <option value="Alumno" {{ old('tipo_paciente') == 'Alumno' ? 'selected' : '' }}>Alumno</option>
+                <option value="Profesor" {{ old('tipo_paciente') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
+                <option value="Administrativo" {{ old('tipo_paciente') == 'Administrativo' ? 'selected' : '' }}>Administrativo</option>
+                <option value="Visitante" {{ old('tipo_paciente') == 'Visitante' ? 'selected' : '' }}>Visitante</option>
+            </select>
+            @error('tipo_paciente')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -279,8 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error fetching municipios:', error));
     });
-
-   
 });
 </script>
 @endsection
