@@ -22,6 +22,6 @@ class RoleMiddleware
             return $next($request);
         }
         toastr()->success('BIENVENIDO');
-        return redirect('home');
+        return redirect('/');
     }
 }
