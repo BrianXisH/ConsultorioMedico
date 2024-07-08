@@ -45,6 +45,7 @@ class IdentificationController extends Controller
             'domicilio_mpio' => 'nullable|max:45',
             'telefono' => 'nullable|max:45',
             'telefono_oficina' => 'nullable|max:45',
+            'tipo_usuario' => 'required|max:45',
         ], [
             'curp.required' => 'La CURP es obligatoria.',
             'nombre_apellido_paterno.required' => 'El apellido paterno es obligatorio.',
@@ -68,6 +69,7 @@ class IdentificationController extends Controller
             'domicilio_mpio.max' => 'El municipio no debe superar los 45 caracteres.',
             'telefono.max' => 'El teléfono no debe superar los 45 caracteres.',
             'telefono_oficina.max' => 'El teléfono de oficina no debe superar los 45 caracteres.',
+            'tipo_usuario' => 'el tipo de usuario es requerido',
         ]);
         $pacienteExistente = Paciente::where('curp', $validatedData['curp'])->first();
         if ($pacienteExistente) {
