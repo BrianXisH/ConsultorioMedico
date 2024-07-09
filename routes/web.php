@@ -107,6 +107,10 @@ Route::get('/consultas/seleccionar/{id}', [ConsultaController::class, 'seleccion
 // Rutas para fichas nuevas
 Route::get('/fichas_nuevas/create', [FichaNuevaController::class, 'create'])->name('fichas_nuevas.create');
 Route::post('/fichas_nuevas', [FichaNuevaController::class, 'store'])->name('fichas_nuevas.store');
+
+
+Route::post('/receta', [PdfController::class, 'store'])->name('receta.store');
+
 });
 
 

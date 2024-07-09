@@ -1,16 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\User;
 use App\Models\FichaNueva;
-use Illuminate\Http\Request;
+use App\Models\Consulta;
+use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();  // Asegúrate de que el usuario esté autenticado
+        $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
             'date' => date('m/d/Y'),
@@ -19,16 +22,13 @@ class PdfController extends Controller
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
-        // Devuelve la vista con los datos necesarios
         $paciente = session('selectedPacienteId');
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
+        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente)
                           ->latest('id')
                           ->first()
                           ->id;
-        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
 
-        // Ahora puedes almacenar este ID en la sesión si así lo deseas
         session(['ultimaFichaId' => $ultimaFichaId]);
 
         error_log("El ID de la ultima ficha: {$ultimaFichaId}");
@@ -39,7 +39,7 @@ class PdfController extends Controller
 
     public function recetanueva()
     {
-        $user = auth()->user();  // Asegúrate de que el usuario esté autenticado
+        $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
             'date' => date('m/d/Y'),
@@ -48,21 +48,44 @@ class PdfController extends Controller
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
-        // Devuelve la vista con los datos necesarios
         $paciente = session('selectedPacienteId');
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
+        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente)
                           ->latest('id')
                           ->first()
                           ->id;
-        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
 
-        // Ahora puedes almacenar este ID en la sesión si así lo deseas
         session(['ultimaFichaId' => $ultimaFichaId]);
 
         error_log("El ID de la ultima ficha: {$ultimaFichaId}");
         error_log("El ID del paciente guardado es: {$paciente}");
 
         return view('receta', $data);
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'medicamento' => 'required|array',
+            'instrucciones' => 'required|string',
+            'diagnostico' => 'required|string',
+        ]);
+
+        $medicamentos = implode(', ', $validatedData['medicamento']);
+        $receta = "Medicamentos: $medicamentos\nInstrucciones: " . $validatedData['instrucciones'];
+
+        $fichaId = session('ultimaFichaId');
+        $userId = Auth::id();
+
+        Consulta::create([
+            'receta' => $receta,
+            'diagnostico' => $validatedData['diagnostico'],
+            'user_id' => $userId,
+            'ficha_nueva_id' => $fichaId,
+        ]);
+
+        $pdf = Pdf::loadView('receta', $validatedData);
+
+        return $pdf->download('receta.pdf');
     }
 }

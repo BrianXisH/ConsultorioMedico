@@ -42,14 +42,30 @@
     <p>Email: {{ $selectedPaciente->email }}</p>
     @endif
 
-    <div id="medicamentos" class="mb-3"></div>
-    
-    <button type="button" onclick="addMedicamento()" class="btn btn-secondary">+</button>
+    <form id="recetaForm" action="{{ route('receta.store') }}" method="POST">
+        @csrf
+        <div id="medicamentos" class="mb-3">
+            <label for="medicamento1" class="form-label">Medicamento 1</label>
+            <input type="text" class="form-control" id="medicamento1" name="medicamento[]">
+        </div>
 
-    <button onclick="window.print();" class="btn btn-primary">Imprimir</button>
-    
+        <button type="button" onclick="addMedicamento()" class="btn btn-secondary">+</button>
+
+        <div class="mb-3">
+            <label for="instrucciones" class="form-label">Agregue las instrucciones aquí</label>
+            <textarea class="form-control" id="instrucciones" name="instrucciones" rows="4" placeholder="Instrucciones..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="diagnostico" class="form-label">Diagnóstico</label>
+            <textarea class="form-control" id="diagnostico" name="diagnostico" rows="4" placeholder="Diagnóstico..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar e Imprimir</button>
+    </form>
+
     <script>
-        let medicamentoCount = 0;
+        let medicamentoCount = 1;
         function addMedicamento() {
             medicamentoCount++;
             const container = document.getElementById('medicamentos');
@@ -57,14 +73,9 @@
             newField.innerHTML = `
                 <label for="medicamento${medicamentoCount}" class="form-label">Medicamento ${medicamentoCount}</label>
                 <input type="text" class="form-control" id="medicamento${medicamentoCount}" name="medicamento[]">
-                <label for="instrucciones${medicamentoCount}" class="form-label">Instrucciones</label>
-                <textarea class="form-control" id="instrucciones${medicamentoCount}" rows="3" placeholder="Instrucciones para medicamento ${medicamentoCount}..."></textarea>
             `;
             container.appendChild(newField);
         }
-
-        // Adding initial medicamento field
-        window.onload = addMedicamento;
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-i5Y2D+YEHuMvQj8lBj+9ed56s3HH+twt7z0dZOx7ElEl9Bp6id3g5e/O5Q7Zwxkw" crossorigin="anonymous"></script>
