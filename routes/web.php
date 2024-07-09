@@ -110,6 +110,8 @@ Route::post('/fichas_nuevas', [FichaNuevaController::class, 'store'])->name('fic
 
 
 Route::post('/receta', [PdfController::class, 'store'])->name('receta.store');
+Route::post('/pdf/store', [PdfController::class, 'store'])->name('pdf.store');
+
 
 });
 
@@ -119,7 +121,7 @@ Route::post('/receta', [PdfController::class, 'store'])->name('receta.store');
 
 
 
-
+Route::get('/receta/{id}/pdf', [PdfController::class, 'showPdf'])->name('receta.pdf');
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
 Route::get('/recetanueva', [PdfController::class, 'recetanueva'])->name('receta.nueva');
 

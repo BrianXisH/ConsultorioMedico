@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -80,7 +79,7 @@ class AdminController extends Controller
     public function historial($id)
     {
         $medico = User::findOrFail($id);
-        $consultas = Consulta::where('user_id', $id)->with('ficIdent')->get();
+        $consultas = Consulta::where('user_id', $id)->get();
 
         return view('admin.medicos.historial', compact('medico', 'consultas'));
     }

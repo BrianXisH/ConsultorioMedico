@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\User;
-use App\Models\FichaNueva;
 use App\Models\Consulta;
+use App\Models\User;
+use App\Models\Paciente;
 use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
@@ -16,25 +16,16 @@ class PdfController extends Controller
         $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('m/d/Y'),
+            'date' => date('d-m-Y'),
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
         $paciente = session('selectedPacienteId');
+        $selectedPaciente = Paciente::find($paciente);
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente)
-                          ->latest('id')
-                          ->first()
-                          ->id;
-
-        session(['ultimaFichaId' => $ultimaFichaId]);
-
-        error_log("El ID de la ultima ficha: {$ultimaFichaId}");
-        error_log("El ID del paciente guardado es: {$paciente}");
-
-        return view('receta', $data);
+        return view('receta', array_merge($data, ['selectedPaciente' => $selectedPaciente]));
     }
 
     public function recetanueva()
@@ -42,25 +33,16 @@ class PdfController extends Controller
         $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('m/d/Y'),
+            'date' => date('d-m-Y'),
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
         $paciente = session('selectedPacienteId');
+        $selectedPaciente = Paciente::find($paciente);
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente)
-                          ->latest('id')
-                          ->first()
-                          ->id;
-
-        session(['ultimaFichaId' => $ultimaFichaId]);
-
-        error_log("El ID de la ultima ficha: {$ultimaFichaId}");
-        error_log("El ID del paciente guardado es: {$paciente}");
-
-        return view('receta', $data);
+        return view('receta', array_merge($data, ['selectedPaciente' => $selectedPaciente]));
     }
 
     public function store(Request $request)
@@ -87,5 +69,25 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('receta', $validatedData);
 
         return $pdf->download('receta.pdf');
+    }
+
+    public function showPdf($id)
+    {
+        $consulta = Consulta::findOrFail($id);
+        $user = Auth::user();
+
+        $data = [
+            'title' => 'Consultorio Médico UPGCH',
+            'date' => $consulta->created_at ? $consulta->created_at->format('d-m-Y') : 'N/A',
+            'user' => $user,
+            'cedula_profesional' => $user->cedula_profesional,
+            'escuela_de_procedencia' => $user->escuela_de_procedencia,
+            'receta' => $consulta->receta,
+            'diagnostico' => $consulta->diagnostico,
+        ];
+
+        $pdf = Pdf::loadView('receta', $data);
+
+        return $pdf->stream('receta.pdf');
     }
 }

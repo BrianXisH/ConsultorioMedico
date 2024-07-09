@@ -27,11 +27,11 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ Auth::user()->name }}</td>
-                <td>{{ Auth::user()->email }}</td>
-                <td>{{ Auth::user()->created_at->format('d-m-Y') }}</td>
-                <td>{{ Auth::user()->cedula_profesional }}</td>
-                <td>{{ Auth::user()->escuela_de_procedencia }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->created_at->format('d-m-Y') }}</td>
+                <td>{{ $user->cedula_profesional }}</td>
+                <td>{{ $user->escuela_de_procedencia }}</td>
             </tr>
         </tbody>
     </table>
@@ -65,19 +65,3 @@
     </form>
 
     <script>
-        let medicamentoCount = 1;
-        function addMedicamento() {
-            medicamentoCount++;
-            const container = document.getElementById('medicamentos');
-            const newField = document.createElement('div');
-            newField.innerHTML = `
-                <label for="medicamento${medicamentoCount}" class="form-label">Medicamento ${medicamentoCount}</label>
-                <input type="text" class="form-control" id="medicamento${medicamentoCount}" name="medicamento[]">
-            `;
-            container.appendChild(newField);
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-i5Y2D+YEHuMvQj8lBj+9ed56s3HH+twt7z0dZOx7ElEl9Bp6id3g5e/O5Q7Zwxkw" crossorigin="anonymous"></script>
-</body>
-</html>

@@ -16,6 +16,7 @@
                 <th>Receta</th>
                 <th>Diagnóstico</th>
                 <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                     <td>{{ $consulta->receta }}</td>
                     <td>{{ $consulta->diagnostico }}</td>
                     <td>{{ $consulta->created_at ? $consulta->created_at->format('d-m-Y') : 'N/A' }}</td>
+                    <td>
+                        <a href="{{ route('receta.pdf', $consulta->idconsultas) }}" class="btn btn-info">Ver Receta PDF</a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
