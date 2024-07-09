@@ -21,7 +21,7 @@ class InterrogatorioController extends Controller
 
     public function store(Request $request)
     {
-        $ultimaFichaId = session('selectedFichaNuevaId'); // Cambiado para usar la ficha nueva
+        $ultimaFichaId = session('selectedPacienteId'); // Cambiado para usar la ficha nueva
 
         $validatedData = $request->validate([
             'interrogatorio_aparato_digestivo' => 'nullable|string|max:255',

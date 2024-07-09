@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Faker\Factory as Faker;
 
 class PacientesTableSeeder extends Seeder
@@ -30,7 +29,7 @@ class PacientesTableSeeder extends Seeder
                 'lugar_nacimiento_estado' => $faker->state,
                 'lugar_nacimiento_ciudad' => $faker->city,
                 'fecha_nacimiento' => $faker->dateTimeBetween('-100 years', '-1 year'),
-                'ocupacion' => $faker->jobTitle,
+                'ocupacion' => substr($faker->jobTitle, 0, 45), // Truncar a 45 caracteres
                 'escolaridad' => $faker->randomElement(['Primaria', 'Secundaria', 'Preparatoria', 'Universidad', 'Posgrado']),
                 'estado_civil' => $faker->randomElement(['Soltero', 'Casado', 'Divorciado', 'Viudo']),
                 'domicilio_calle' => $faker->streetName,
