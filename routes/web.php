@@ -113,6 +113,8 @@ Route::post('/receta', [PdfController::class, 'store'])->name('receta.store');
 Route::post('/pdf/store', [PdfController::class, 'store'])->name('pdf.store');
 
 
+
+
 });
 
 

@@ -41,7 +41,7 @@ class PacientesTableSeeder extends Seeder
                 'domicilio_delegacion' => $faker->citySuffix,
                 'telefono' => $faker->phoneNumber,
                 'telefono_oficina' => $faker->phoneNumber,
-                'tipo_usuario' => $faker->randomElement(['Paciente', 'Consulta Externa', 'Urgencias']),
+                'tipo_usuario' => $faker->randomElement(['Maestro', 'Alumno', 'Administrativo', 'Visitante']),
             ]);
         }
     }
