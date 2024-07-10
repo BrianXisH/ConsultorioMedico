@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Consulta;
+use App\Models\FichaNueva;
 use App\Models\User;
 use App\Models\Paciente;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,29 @@ class PdfController extends Controller
         $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('d-m-Y'),
+            'date' => date('m/d/Y'),
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
         $paciente = session('selectedPacienteId');
-        $selectedPaciente = Paciente::find($paciente);
 
-        return view('receta', array_merge($data, ['selectedPaciente' => $selectedPaciente]));
+        // Obtén la última ficha nueva del paciente
+        $ultimaFicha = FichaNueva::where('paciente_id', $paciente)->latest('id')->first();
+
+        // Verifica si se encontró la ficha
+        if ($ultimaFicha) {
+            $ultimaFichaId = $ultimaFicha->id;
+            session(['ultimaFichaId' => $ultimaFichaId]);
+            error_log("El ID de la ultima ficha: {$ultimaFichaId}");
+        } else {
+            error_log("No se encontró la ficha nueva para el paciente: {$paciente}");
+        }
+
+        error_log("El ID del paciente guardado es: {$paciente}");
+
+        return view('receta', $data);
     }
 
     public function recetanueva()
@@ -33,16 +47,29 @@ class PdfController extends Controller
         $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('d-m-Y'),
+            'date' => date('m/d/Y'),
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
         $paciente = session('selectedPacienteId');
-        $selectedPaciente = Paciente::find($paciente);
 
-        return view('receta', array_merge($data, ['selectedPaciente' => $selectedPaciente]));
+        // Obtén la última ficha nueva del paciente
+        $ultimaFicha = FichaNueva::where('paciente_id', $paciente)->latest('id')->first();
+
+        // Verifica si se encontró la ficha
+        if ($ultimaFicha) {
+            $ultimaFichaId = $ultimaFicha->id;
+            session(['ultimaFichaId' => $ultimaFichaId]);
+            error_log("El ID de la ultima ficha: {$ultimaFichaId}");
+        } else {
+            error_log("No se encontró la ficha nueva para el paciente: {$paciente}");
+        }
+
+        error_log("El ID del paciente guardado es: {$paciente}");
+
+        return view('receta', $data);
     }
 
     public function store(Request $request)
@@ -59,6 +86,10 @@ class PdfController extends Controller
         $fichaId = session('ultimaFichaId');
         $userId = Auth::id();
 
+        if (!$fichaId) {
+            return back()->withErrors(['error' => 'No se pudo obtener el ID de la ficha.']);
+        }
+
         Consulta::create([
             'receta' => $receta,
             'diagnostico' => $validatedData['diagnostico'],
@@ -66,7 +97,8 @@ class PdfController extends Controller
             'ficha_nueva_id' => $fichaId,
         ]);
 
-        $pdf = Pdf::loadView('receta', $validatedData);
+        $pdfData = array_merge($validatedData, ['user' => Auth::user()]);
+        $pdf = Pdf::loadView('receta', $pdfData);
 
         return $pdf->download('receta.pdf');
     }
