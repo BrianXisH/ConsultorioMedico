@@ -121,7 +121,7 @@ Route::post('/pdf/store', [PdfController::class, 'store'])->name('pdf.store');
 
 
 
-Route::get('/receta/{id}/pdf', [PdfController::class, 'showPdf'])->name('receta.pdf');
+Route::get('/receta/{id}/pdf', [PdfController::class, 'showPdfAdmin'])->name('receta.pdf');
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
 Route::get('/recetanueva', [PdfController::class, 'recetanueva'])->name('receta.nueva');
 

@@ -6,6 +6,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Consulta;
 use App\Models\FichaNueva;
 use App\Models\Paciente;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
@@ -92,6 +94,27 @@ class PdfController extends Controller
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
             'receta' => $consulta->receta,
             'diagnostico' => $consulta->diagnostico,
+        ];
+
+        $pdf = Pdf::loadView('pdf_receta', $data);
+
+        return $pdf->stream('receta.pdf');
+    }
+    public function showPdfAdmin($id)
+    {
+        $consulta = Consulta::findOrFail($id);
+        $medico = User::findOrFail($consulta->user_id);
+
+        $selectedPacienteId = $consulta->fichaNueva->paciente_id; // Obtener el paciente desde la ficha nueva relacionada
+        $selectedPaciente = Paciente::find($selectedPacienteId);
+
+        $data = [
+            'title' => 'Consultorio Médico UPGCH',
+            'date' => $consulta->created_at ? $consulta->created_at->format('d-m-Y') : 'N/A',
+            'user' => $medico,
+            'selectedPaciente' => $selectedPaciente,
+            'diagnostico' => $consulta->diagnostico,
+            'receta' => $consulta->receta,
         ];
 
         $pdf = Pdf::loadView('pdf_receta', $data);

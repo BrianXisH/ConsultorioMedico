@@ -53,14 +53,10 @@
             <label for="grupo_sanguineo">Grupo Sanguíneo</label>
             <select id="grupo_sanguineo" name="grupo_sanguineo" class="form-control @error('grupo_sanguineo') is-invalid @enderror">
                 <option value="">Seleccione su grupo sanguíneo</option>
-                <option value="A+" {{ old('grupo_sanguineo') == 'A+' ? 'selected' : '' }}>A+</option>
-                <option value="A-" {{ old('grupo_sanguineo') == 'A-' ? 'selected' : '' }}>A-</option>
-                <option value="B+" {{ old('grupo_sanguineo') == 'B+' ? 'selected' : '' }}>B+</option>
-                <option value="B-" {{ old('grupo_sanguineo') == 'B-' ? 'selected' : '' }}>B-</option>
-                <option value="AB+" {{ old('grupo_sanguineo') == 'AB+' ? 'selected' : '' }}>AB+</option>
-                <option value="AB-" {{ old('grupo_sanguineo') == 'AB-' ? 'selected' : '' }}>AB-</option>
-                <option value="O+" {{ old('grupo_sanguineo') == 'O+' ? 'selected' : '' }}>O+</option>
-                <option value="O-" {{ old('grupo_sanguineo') == 'O-' ? 'selected' : '' }}>O-</option>
+                <option value="A" {{ old('grupo_sanguineo') == 'A' ? 'selected' : '' }}>A</option>
+                <option value="B" {{ old('grupo_sanguineo') == 'B' ? 'selected' : '' }}>B</option>
+                <option value="AB" {{ old('grupo_sanguineo') == 'AB' ? 'selected' : '' }}>AB</option>
+                <option value="O" {{ old('grupo_sanguineo') == 'O' ? 'selected' : '' }}>O</option>
             </select>
             @error('grupo_sanguineo')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -69,8 +65,12 @@
 
         <div class="form-group">
             <label>Factor Rh</label>
-            <input type="text" name="factor_rh" class="form-control @error('factor_rh') is-invalid @enderror" value="{{ old('factor_rh') }}">
-            @error('factor_rh')
+            <select name="factor_rh" id="factor_rh" class="form-control @error('factor_rh') is-invalid @enderror">
+                <option value="">Seleccione el factor Rh</option>
+                <option value="+" {{ old('factor_rh') == '+' ? 'selected' : '' }}>+</option>
+                <option value="-" {{ old('factor_rh') == '-' ? 'selected' : '' }}>-</option>
+            </select>       
+                @error('factor_rh')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>

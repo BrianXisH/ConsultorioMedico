@@ -43,7 +43,7 @@ class FamilyHistoryController extends Controller
 
             DB::commit();
             toastr()->success('Antecedentes patológicos hereditarios guardados con éxito');
-            return redirect()->route('familyHistory.edit', ['ficha_nueva_id' => $ultimaFichaId]);
+            return redirect()->route('antecedenes_patologicos_hereditarios', ['ficha_nueva_id' => $ultimaFichaId]);
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Error al guardar los antecedentes patológicos hereditarios: ' . $e->getMessage());
