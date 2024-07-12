@@ -9,9 +9,16 @@ use App\Models\Paciente;
 
 class CitaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $citas = Cita::with('user', 'paciente')->get();
+        $query = Cita::with('user', 'paciente');
+
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha_hora', $request->fecha);
+        }
+
+        $citas = $query->get();
+
         return view('citas.index', compact('citas'));
     }
 
