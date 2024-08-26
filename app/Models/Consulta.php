@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,15 +9,14 @@ class Consulta extends Model
 {
     use HasFactory;
 
-    protected $table = 'consultas';  // Asegurando que Laravel use el nombre correcto de la tabla.
-    protected $primaryKey = 'idconsultas'; // Ajustando la clave primaria.
+    protected $table = 'consultas';
+    protected $primaryKey = 'idconsultas';
 
     protected $fillable = [
         'receta',
         'diagnostico',
-        'user_id',  // Asegúrate de que este campo esté en la tabla
-        'enfermedades_idenfermedades',
-        'ficha_nueva_id' // Cambiado para apuntar a la nueva ficha
+        'user_id',
+        'ficha_nueva_id',
     ];
 
     /**
@@ -24,15 +24,7 @@ class Consulta extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id'); // Cambiado a 'user_id' y 'id'
-    }
-
-    /**
-     * Relación con Enfermedad.
-     */
-    public function enfermedad()
-    {
-        return $this->belongsTo('App\Models\Enfermedad', 'enfermedades_idenfermedades', 'idenfermedades');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     /**
@@ -40,6 +32,6 @@ class Consulta extends Model
      */
     public function fichaNueva()
     {
-        return $this->belongsTo('App\Models\FichaNueva', 'ficha_nueva_id', 'id'); // Cambiado para apuntar a la nueva ficha
+        return $this->belongsTo('App\Models\FichaNueva', 'ficha_nueva_id', 'id');
     }
 }

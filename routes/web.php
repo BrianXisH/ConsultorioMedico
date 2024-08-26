@@ -82,8 +82,6 @@ Route::middleware(['auth', 'role:medico'])->group(function () {
 
     Route::get('/interrogatorio', [InterrogatorioController::class, 'index'])->name('interrogatorio.index');
     Route::post('/interrogatorio', [InterrogatorioController::class, 'store'])->name('interrogatorio.store');
-    Route::post('/habitus', [HabitusController::class, 'store'])->name('habitus.store');
-    //ver y editar interrogatorio
     Route::get('/interrogatorio/{ficha_nueva_id}/edit', [InterrogatorioController::class, 'edit'])->name('interrogatorio.edit');
     Route::put('/interrogatorio/{ficha_nueva_id}', [InterrogatorioController::class, 'update'])->name('interrogatorio.update');
 
@@ -109,6 +107,14 @@ Route::get('/consultas/seleccionar/{id}', [ConsultaController::class, 'seleccion
 // Rutas para fichas nuevas
 Route::get('/fichas_nuevas/create', [FichaNuevaController::class, 'create'])->name('fichas_nuevas.create');
 Route::post('/fichas_nuevas', [FichaNuevaController::class, 'store'])->name('fichas_nuevas.store');
+
+
+Route::post('/receta', [PdfController::class, 'store'])->name('receta.store');
+Route::post('/pdf/store', [PdfController::class, 'store'])->name('pdf.store');
+
+
+
+
 });
 
 
@@ -117,7 +123,7 @@ Route::post('/fichas_nuevas', [FichaNuevaController::class, 'store'])->name('fic
 
 
 
-
+Route::get('/receta/{id}/pdf', [PdfController::class, 'showPdfAdmin'])->name('receta.pdf');
 Route::get('/generarpdf', [PdfController::class, 'index'])->name('receta.show');
 Route::get('/recetanueva', [PdfController::class, 'recetanueva'])->name('receta.nueva');
 

@@ -14,10 +14,6 @@
     <form method="POST" action="{{ route('ficha.store') }}" class="form-container">
         @csrf
 
-        
-
-
-        
         <div class="form-group">
             <label>CURP</label>
             <div class="input-group">
@@ -25,7 +21,6 @@
                 @error('curp')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
-            
             </div>
         </div>
 
@@ -111,6 +106,20 @@
             <label>Ocupación</label>
             <input type="text" name="ocupacion" class="form-control @error('ocupacion') is-invalid @enderror" value="{{ old('ocupacion') }}">
             @error('ocupacion')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label>Tipo de Paciente</label>
+            <select name="tipo_usuario" class="form-control @error('tipo_usuario') is-invalid @enderror">
+                <option value="">Seleccione</option>
+                <option value="Alumno" {{ old('tipo_usuario') == 'Alumno' ? 'selected' : '' }}>Alumno</option>
+                <option value="Profesor" {{ old('tipo_usuario') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
+                <option value="Administrativo" {{ old('tipo_usuario') == 'Administrativo' ? 'selected' : '' }}>Administrativo</option>
+                <option value="Visitante" {{ old('tipo_usuario') == 'Visitante' ? 'selected' : '' }}>Visitante</option>
+            </select>
+            @error('tipo_usuario')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -265,8 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error fetching municipios:', error));
     });
-
-   
 });
 </script>
 @endsection

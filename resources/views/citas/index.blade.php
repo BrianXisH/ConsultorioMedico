@@ -5,6 +5,20 @@
     <h1>Citas</h1>
     <a href="{{ route('citas.create') }}" class="btn btn-primary mb-3">Agendar Nueva Cita</a>
 
+    <form method="GET" action="{{ route('citas.index') }}" class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="fecha" class="form-label">Filtrar por Fecha</label>
+                <input type="date" name="fecha" id="fecha" class="form-control" value="{{ request('fecha') }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">&nbsp;</label>
+                <button type="submit" class="btn btn-secondary">Filtrar</button>
+                <a href="{{ route('citas.index') }}" class="btn btn-light">Limpiar Filtro</a>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-bordered">
         <thead>
             <tr>

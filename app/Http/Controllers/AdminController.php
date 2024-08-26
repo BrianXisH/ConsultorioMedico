@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -77,11 +76,18 @@ class AdminController extends Controller
         return redirect()->route('admin.medicos.index')->with('success', 'Médico eliminado exitosamente');
     }
 
-    public function historial($id)
-    {
-        $medico = User::findOrFail($id);
-        $consultas = Consulta::where('user_id', $id)->with('ficIdent')->get();
+    public function historial(Request $request, $id)
+{
+    $medico = User::findOrFail($id);
+    $consultasQuery = Consulta::where('user_id', $id);
 
-        return view('admin.medicos.historial', compact('medico', 'consultas'));
+    if ($request->has('fecha') && !empty($request->fecha)) {
+        $consultasQuery->whereDate('created_at', $request->fecha);
     }
+
+    $consultas = $consultasQuery->get();
+
+    return view('admin.medicos.historial', compact('medico', 'consultas'));
+}
+
 }

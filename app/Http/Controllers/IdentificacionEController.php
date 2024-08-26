@@ -60,7 +60,7 @@ class IdentificacionEController extends Controller
             error_log("ID de la ficha guardada: " . $ficha->idfi);
 
             toastr()->success('Ficha de identificación guardada con éxito.');
-            return redirect()->route('pathological.index'); // Asegúrate de que esta ruta esté definida
+            return redirect()->route('receta.pdf'); // Asegúrate de que esta ruta esté definida
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors('Error al guardar la ficha de identificación: ' . $e->getMessage());

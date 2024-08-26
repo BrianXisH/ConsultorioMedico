@@ -1,68 +1,124 @@
 <?php
 namespace App\Http\Controllers;
 
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\User;
-use App\Models\FichaNueva;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Consulta;
+use App\Models\FichaNueva;
+use App\Models\Paciente;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();  // Asegúrate de que el usuario esté autenticado
+        $user = auth()->user();
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('m/d/Y'),
+            'date' => date('d-m-Y'),
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
         ];
 
-        // Devuelve la vista con los datos necesarios
         $paciente = session('selectedPacienteId');
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
-                          ->latest('id')
-                          ->first()
-                          ->id;
-        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
+        // Obtén la última ficha nueva del paciente
+        $ultimaFicha = FichaNueva::where('paciente_id', $paciente)->latest('id')->first();
 
-        // Ahora puedes almacenar este ID en la sesión si así lo deseas
-        session(['ultimaFichaId' => $ultimaFichaId]);
-
-        error_log("El ID de la ultima ficha: {$ultimaFichaId}");
-        error_log("El ID del paciente guardado es: {$paciente}");
+        // Verifica si se encontró la ficha
+        if ($ultimaFicha) {
+            $ultimaFichaId = $ultimaFicha->id;
+            session(['ultimaFichaId' => $ultimaFichaId]);
+        }
 
         return view('receta', $data);
     }
 
-    public function recetanueva()
+    public function store(Request $request)
     {
-        $user = auth()->user();  // Asegúrate de que el usuario esté autenticado
+        $validatedData = $request->validate([
+            'medicamento' => 'required|array',
+            'instrucciones' => 'required|array',
+            'diagnostico' => 'required|string',
+        ]);
+
+        $receta = '';
+        foreach ($validatedData['medicamento'] as $index => $medicamento) {
+            $receta .= "Medicamento " . ($index + 1) . ": $medicamento<br>Instrucción " . ($index + 1) . ": " . $validatedData['instrucciones'][$index] . "<br>";
+        }
+
+        $fichaId = session('ultimaFichaId');
+        $userId = Auth::id();
+
+        if (!$fichaId) {
+            return back()->withErrors(['error' => 'No se pudo obtener el ID de la ficha.']);
+        }
+
+        $consulta = Consulta::create([
+            'receta' => $receta,
+            'diagnostico' => $validatedData['diagnostico'],
+            'user_id' => $userId,
+            'ficha_nueva_id' => $fichaId,
+        ]);
+
+        $selectedPacienteId = session('selectedPacienteId');
+        $selectedPaciente = Paciente::find($selectedPacienteId);
+
+        $pdfData = [
+            'title' => 'Consultorio Médico UPGCH',
+            'date' => date('d-m-Y'),
+            'user' => Auth::user(),
+            'selectedPaciente' => $selectedPaciente,
+            'diagnostico' => $validatedData['diagnostico'],
+            'receta' => $receta,
+        ];
+
+        $pdf = Pdf::loadView('pdf_receta', $pdfData);
+
+        return $pdf->download('receta.pdf');
+    }
+
+    public function showPdf($id)
+    {
+        $consulta = Consulta::findOrFail($id);
+        $user = Auth::user();
+
         $data = [
             'title' => 'Consultorio Médico UPGCH',
-            'date' => date('m/d/Y'),
+            'date' => $consulta->created_at ? $consulta->created_at->format('d-m-Y') : 'N/A',
             'user' => $user,
             'cedula_profesional' => $user->cedula_profesional,
             'escuela_de_procedencia' => $user->escuela_de_procedencia,
+            'receta' => $consulta->receta,
+            'diagnostico' => $consulta->diagnostico,
         ];
 
-        // Devuelve la vista con los datos necesarios
-        $paciente = session('selectedPacienteId');
+        $pdf = Pdf::loadView('pdf_receta', $data);
 
-        $ultimaFichaId = FichaNueva::where('paciente_id', $paciente )
-                          ->latest('id')
-                          ->first()
-                          ->id;
-        // Asegúrate de que 'id' sea la columna de la clave primaria en la tabla fichas_nuevas
+        return $pdf->stream('receta.pdf');
+    }
+    public function showPdfAdmin($id)
+    {
+        $consulta = Consulta::findOrFail($id);
+        $medico = User::findOrFail($consulta->user_id);
 
-        // Ahora puedes almacenar este ID en la sesión si así lo deseas
-        session(['ultimaFichaId' => $ultimaFichaId]);
+        $selectedPacienteId = $consulta->fichaNueva->paciente_id; // Obtener el paciente desde la ficha nueva relacionada
+        $selectedPaciente = Paciente::find($selectedPacienteId);
 
-        error_log("El ID de la ultima ficha: {$ultimaFichaId}");
-        error_log("El ID del paciente guardado es: {$paciente}");
+        $data = [
+            'title' => 'Consultorio Médico UPGCH',
+            'date' => $consulta->created_at ? $consulta->created_at->format('d-m-Y') : 'N/A',
+            'user' => $medico,
+            'selectedPaciente' => $selectedPaciente,
+            'diagnostico' => $consulta->diagnostico,
+            'receta' => $consulta->receta,
+        ];
 
-        return view('receta', $data);
+        $pdf = Pdf::loadView('pdf_receta', $data);
+
+        return $pdf->stream('receta.pdf');
     }
 }

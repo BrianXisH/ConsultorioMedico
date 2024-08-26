@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -22,7 +21,7 @@ class InterrogatorioController extends Controller
 
     public function store(Request $request)
     {
-        $ultimaFichaId = session('selectedPacienteId'); 
+        $ultimaFichaId = session('selectedPacienteId'); // Cambiado para usar la ficha nueva
 
         $validatedData = $request->validate([
             'interrogatorio_aparato_digestivo' => 'nullable|string|max:255',
@@ -64,8 +63,13 @@ class InterrogatorioController extends Controller
     public function edit($ficha_nueva_id)
     {
         $ficha = FichaNueva::findOrFail($ficha_nueva_id);
-        $paciente = Paciente::findOrFail($ficha->pacientes_idpacientes);
+        $paciente = Paciente::findOrFail($ficha->paciente_id);
         $ipsa = Ipsa::where('ficha_nueva_id', $ficha_nueva_id)->first();
+
+        if (!$ipsa) {
+            return abort(404, 'Interrogatorio no encontrado');
+        }
+
         return view('edit_antecedentes.ipsa_edit', compact('paciente', 'ipsa', 'ficha'));
     }
 

@@ -1,9 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+
+@extends('layouts.app')
+
+@section('content')
 <head>
     <meta charset="UTF-8">
     <title>Receta médica</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .no-border {
+            border: none !important;
+            outline: none !important;
+        }
+    </style>
 </head>
 <body style="margin: 0 auto; width: 800px;">
     @php
@@ -27,46 +35,74 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ Auth::user()->name }}</td>
-                <td>{{ Auth::user()->email }}</td>
-                <td>{{ Auth::user()->created_at->format('d-m-Y') }}</td>
-                <td>{{ Auth::user()->cedula_profesional }}</td>
-                <td>{{ Auth::user()->escuela_de_procedencia }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->created_at->format('d-m-Y') }}</td>
+                <td>{{ $user->cedula_profesional }}</td>
+                <td>{{ $user->escuela_de_procedencia }}</td>
             </tr>
         </tbody>
     </table>
 
     @if($selectedPaciente)
     <h3>Paciente:</h3>
-    <p>Nombre: {{ $selectedPaciente->nombre_nombres }}</p>
-    <p>Email: {{ $selectedPaciente->email }}</p>
+    <p>Nombre: {{ $selectedPaciente->nombre_nombres }} {{ $selectedPaciente->nombre_apellido_paterno }} {{ $selectedPaciente->nombre_apellido_materno }}</p>
+    <p style="display: inline;">Edad: {{ $selectedPaciente->edad_anios }} años</p>
     @endif
 
-    <div id="medicamentos" class="mb-3"></div>
-    
-    <button type="button" onclick="addMedicamento()" class="btn btn-secondary">+</button>
+    <form id="recetaForm" action="{{ route('receta.store') }}" method="POST">
+        @csrf
+        <div id="medicamentos" class="mb-3">
+            <label for="medicamento1" class="form-label">Medicamento 1</label>
+            <input type="text" class="form-control" id="medicamento1" name="medicamento[]" placeholder="Ingrese el medicamento">
+            <label for="instruccion1" class="form-label">Instrucción 1</label>
+            <textarea class="form-control" id="instruccion1" name="instrucciones[]" rows="2" placeholder="Ingrese las instrucciones"></textarea>
+        </div>
 
-    <button onclick="window.print();" class="btn btn-primary">Imprimir</button>
-    
+        <button type="button" onclick="addMedicamento()" class="btn btn-secondary">+</button>
+
+        <div class="mb-3">
+            <label for="diagnostico" class="form-label">Diagnóstico</label>
+            <textarea class="form-control" id="diagnostico" name="diagnostico" rows="4" placeholder="Diagnóstico..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar e Imprimir</button>
+    </form>
+
     <script>
-        let medicamentoCount = 0;
         function addMedicamento() {
-            medicamentoCount++;
-            const container = document.getElementById('medicamentos');
-            const newField = document.createElement('div');
-            newField.innerHTML = `
-                <label for="medicamento${medicamentoCount}" class="form-label">Medicamento ${medicamentoCount}</label>
-                <input type="text" class="form-control" id="medicamento${medicamentoCount}" name="medicamento[]">
-                <label for="instrucciones${medicamentoCount}" class="form-label">Instrucciones</label>
-                <textarea class="form-control" id="instrucciones${medicamentoCount}" rows="3" placeholder="Instrucciones para medicamento ${medicamentoCount}..."></textarea>
-            `;
-            container.appendChild(newField);
+            const medicamentosDiv = document.getElementById('medicamentos');
+            const index = medicamentosDiv.children.length / 4 + 1;
+
+            const medicamentoLabel = document.createElement('label');
+            medicamentoLabel.classList.add('form-label');
+            medicamentoLabel.setAttribute('for', `medicamento${index}`);
+            medicamentoLabel.textContent = `Medicamento ${index}`;
+
+            const medicamentoInput = document.createElement('input');
+            medicamentoInput.classList.add('form-control');
+            medicamentoInput.setAttribute('type', 'text');
+            medicamentoInput.setAttribute('id', `medicamento${index}`);
+            medicamentoInput.setAttribute('name', 'medicamento[]');
+            medicamentoInput.setAttribute('placeholder', 'Ingrese el medicamento');
+
+            const instruccionLabel = document.createElement('label');
+            instruccionLabel.classList.add('form-label');
+            instruccionLabel.setAttribute('for', `instruccion${index}`);
+            instruccionLabel.textContent = `Instrucción ${index}`;
+
+            const instruccionTextarea = document.createElement('textarea');
+            instruccionTextarea.classList.add('form-control');
+            instruccionTextarea.setAttribute('id', `instruccion${index}`);
+            instruccionTextarea.setAttribute('name', 'instrucciones[]');
+            instruccionTextarea.setAttribute('rows', '2');
+            instruccionTextarea.setAttribute('placeholder', 'Ingrese las instrucciones');
+
+            medicamentosDiv.appendChild(medicamentoLabel);
+            medicamentosDiv.appendChild(medicamentoInput);
+            medicamentosDiv.appendChild(instruccionLabel);
+            medicamentosDiv.appendChild(instruccionTextarea);
         }
-
-        // Adding initial medicamento field
-        window.onload = addMedicamento;
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-i5Y2D+YEHuMvQj8lBj+9ed56s3HH+twt7z0dZOx7ElEl9Bp6id3g5e/O5Q7Zwxkw" crossorigin="anonymous"></script>
 </body>
-</html>
+@endsection
