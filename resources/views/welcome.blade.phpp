@@ -1,17 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid my-4" style="background-color: #ffffff; padding: 20px; border-radius: 10px;">    
-    <div class="column">
 
-        <div class="col-lg-12 col-md-12">
+<style>
+    .btn-orange {
+        background-color: rgba(255, 166, 0, 0.834);
+        color: white; /* Cambia el color del texto a blanco para que sea legible en el fondo naranja */
+    }
+</style>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Registrar usuario</h5>
+                    <button onclick="window.location.href='{{ route('paciente.registrar') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/paciente.png') }}" alt="Registrar Paciente" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Nueva Consulta</h5>
+                    <button onclick="window.location.href='{{ route('consultas.nueva') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/consulta.png') }}" alt="Nueva Consulta" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Consulta existente</h5>
+                    <button onclick="window.location.href='{{ route('consultas.existente') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/existente.png') }}" alt="Consulta Existente" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Agendar Cita</h5>
+                    <button onclick="window.location.href='{{ route('citas.create') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/cita.png') }}" alt="Agendar Cita" height="40">
+                    </button>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ver Citas</h5>
+                    <button onclick="window.location.href='{{ route('citas.index') }}'" class="btn btn-orange">
+                        <img src="{{ asset('images/ver_citas.png') }}" alt="Ver Citas" height="40">
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="col-lg-8 col-md-12">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div id="pieChartContainer" style="width: 100%; height: 360px;"></div>
                 </div>
             </div>
             <div class="card shadow-sm mt-4">
-                
                 <div class="card-body">
                     <div id="columnChartContainer" style="width: 100%; height: 360px;"></div>
                 </div>
